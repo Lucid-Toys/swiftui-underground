@@ -20,9 +20,9 @@ struct ListStatusDetail: View {
                 } else {
                     Spacer()
                     GoodServiceView(line: self.line)
-                    Spacer()
                 }
             }
+            Spacer()
         }
         .navigationBarTitle(line.name)
     }
@@ -51,9 +51,9 @@ struct PoorServiceView: View {
             ForEach(line.lineStatuses) { status in
                 HStack {
                     Image(systemName: "exclamationmark.circle")
-                        .font(.title)
+                        .font(.headline)
                     Text(status.statusSeverityDescription)
-                        .font(.title)
+                        .font(.headline)
                 }
                 if status.reason != nil {
                     Text(status.reason!)
@@ -62,6 +62,7 @@ struct PoorServiceView: View {
                 }
             }
         }
+    .padding()
     }
 }
 

@@ -10,12 +10,41 @@ import SwiftUI
 
 struct ContentView: View {
     var body: some View {
+        TabView {
+            NavigationView {
+                LineStatusList()
+                    .navigationBarTitle("Underground Status")
+            }
+            .tabItem {
+                Image(systemName: "tram.fill")
+                Text("Status")
+            }
+            
+            AboutView()
+                .tabItem {
+                    Image(systemName: "questionmark.circle.fill")
+                    Text("About")
+            }
+        }
+    }
+}
+
+struct AboutView: View {
+    var body: some View {
         NavigationView {
-            LineStatusList()
-                .navigationBarTitle(
-                    Text("Underground Status"),
-                    displayMode: .inline
-                )
+            VStack(spacing: 8) {
+                Image("GlossyAppIcon")
+                    .resizable()
+                    .frame(width: 128, height: 128, alignment: .center)
+                Text("Lucid Underground")
+                    .font(.headline)
+                Text("An app built by Daniel Eden, using open data from Transport for London.")
+                    .font(.subheadline)
+                    .foregroundColor(.secondary)
+                    .multilineTextAlignment(.center)
+            }
+            .padding()
+            .navigationBarTitle(Text("About Lucid Underground"), displayMode: .inline)
         }
     }
 }

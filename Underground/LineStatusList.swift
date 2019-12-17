@@ -19,7 +19,7 @@ struct LineStatusList: View {
                     HStack() {
                         Rectangle().fill(TfLLine(id: line.id).color)
                             .frame(width: 8)
-                        VStack(alignment: .leading) {
+                        VStack(alignment: .leading, spacing: 2) {
                             Text(line.name)
                                 .font(.headline)
                             StatusSummary(lineStatuses: line.lineStatuses)
@@ -50,7 +50,7 @@ struct StatusSummary: View {
 struct PoorStatusSummary: View {
     var status: TfLDisruption
     var body: some View {
-        VStack {
+        VStack(alignment: .leading, spacing: 2) {
             HStack(spacing: 4) {
                 Text(status.statusSeverityDescription)
                     .font(.subheadline)
@@ -58,7 +58,6 @@ struct PoorStatusSummary: View {
             }.foregroundColor(status.statusSeverity < 6 ? .red : .yellow)
             if status.reason != nil {
                 Text(status.reason!)
-                    .padding(.top, 8)
                     .lineLimit(2)
             }
         }
