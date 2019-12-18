@@ -9,12 +9,12 @@
 import SwiftUI
 
 struct LineStatusList: View {
-    @ObservedObject var fetcher = DataFetcher()
+    @ObservedObject var data: DataFetcher
     @State private var navAccentColor: Color? = .accentColor
     
     var body: some View {
         List {
-            ForEach(fetcher.lines) { line in
+            ForEach(data.lines) { line in
                 NavigationLink(destination: ListStatusDetail(line: line)) {
                     HStack() {
                         Rectangle().fill(TfLLine(id: line.id).color)
@@ -75,6 +75,6 @@ struct GoodStatusSummary: View {
 
 struct LineStatusList_Previews: PreviewProvider {
     static var previews: some View {
-        LineStatusList()
+        LineStatusList(data: DataFetcher())
     }
 }

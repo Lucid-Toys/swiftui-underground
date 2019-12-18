@@ -9,16 +9,22 @@
 import SwiftUI  
 
 struct ContentView: View {
+    @ObservedObject var data = DataFetcher()
+    @EnvironmentObject var device: DeviceModel
+    
     var body: some View {
         TabView {
-            NavigationView {
-                LineStatusList()
-                    .navigationBarTitle("Underground Status")
+            Group {
+                if device.isLandscape {
+                    LandscapeModeMainView(data: data)
+                } else {
+                    PortraitModeMainView(data: data)
+                }
             }
-            .tabItem {
-                Image(systemName: "tram.fill")
-                Text("Status")
-            }
+                .tabItem {
+                    Image(systemName: "tram.fill")
+                    Text("Status")
+                }
             
             AboutView()
                 .tabItem {
@@ -29,23 +35,41 @@ struct ContentView: View {
     }
 }
 
-struct AboutView: View {
+struct PortraitModeMainView: View {
+    var data: DataFetcher
     var body: some View {
         NavigationView {
-            VStack(spacing: 8) {
-                Image("GlossyAppIcon")
-                    .resizable()
-                    .frame(width: 128, height: 128, alignment: .center)
-                Text("Lucid Underground")
-                    .font(.headline)
-                Text("An app built by Daniel Eden, using open data from Transport for London.")
-                    .font(.subheadline)
-                    .foregroundColor(.secondary)
-                    .multilineTextAlignment(.center)
-            }
-            .padding()
-            .navigationBarTitle(Text("About Lucid Underground"), displayMode: .inline)
+            LineStatusList(data: data)
+                .navigationBarTitle("Underground Status")
         }
+        .navigationViewStyle(StackNavigationViewStyle())
+    }
+}
+
+struct LandscapeModeMainView: View {
+    var data: DataFetcher
+    var body: some View {
+        NavigationView {
+            LineStatusList(data: data)
+                .navigationBarTitle("Underground Status")
+        }
+    }
+}
+
+struct AboutView: View {
+    var body: some View {
+        VStack(spacing: 8) {
+            Image("GlossyAppIcon")
+                .resizable()
+                .frame(width: 128, height: 128, alignment: .center)
+            Text("Lucid Underground")
+                .font(.headline)
+            Text("An app built by Daniel Eden, using open data from Transport for London.")
+                .font(.subheadline)
+                .foregroundColor(.secondary)
+                .multilineTextAlignment(.center)
+        }
+        .padding()
     }
 }
 
