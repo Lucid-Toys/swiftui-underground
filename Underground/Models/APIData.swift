@@ -65,10 +65,14 @@ public class DataFetcher: ObservableObject {
         URLSession(configuration: config).dataTask(with: url) {(data, response, error) in
             do {
                 print("Fetching underground status data")
+                let favourites = UserDefaults.standard.object(forKey: "syncFavourites") as? [String] ?? [String]()
                 if let d = data {
                     let decodedResponse = try JSONDecoder().decode([APIResponse].self, from: d)
                     DispatchQueue.main.async {
-                        self.lines = decodedResponse
+                        let lines = decodedResponse.sorted {
+                            return favourites.firstIndex(of: $0.id.rawValue) ?? Int.max < favourites.firstIndex(of: $1.id.rawValue) ?? Int.max
+                        }
+                        self.lines = lines
                     }
                 } else {
                     print("No data")

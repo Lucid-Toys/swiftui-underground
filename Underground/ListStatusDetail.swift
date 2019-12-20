@@ -11,35 +11,39 @@ import SwiftUI
 struct ListStatusDetail: View {
     var line: APIResponse
     var body: some View {
-        VStack {
-            Rectangle().fill(TfLLine(id: line.id).color)
-                .frame(height: 8)
-            ForEach(line.lineStatuses) { status in
-                if status.statusSeverityDescription != "Good Service" {
-                    PoorServiceView(line: self.line)
-                } else {
-                    Spacer()
-                    GoodServiceView(line: self.line)
+        
+        ForEach(line.lineStatuses) { status in
+            if status.statusSeverity < 10 {
+                ScrollView {
+                    VStack {
+                        Rectangle().fill(TfLLine(id: self.line.id).color)
+                            .frame(height: 8)
+                        PoorServiceView(line: self.line)
+                    }
                 }
+            } else {
+                Rectangle().fill(TfLLine(id: self.line.id).color)
+                    .frame(height: 8)
+                Spacer()
+                GoodServiceView(line: self.line)
+                Spacer()
             }
-            Spacer()
-        }
-        .navigationBarTitle(line.name)
+        }.navigationBarTitle(self.line.name)
+        .background(Color("BackgroundWash"))
     }
 }
+
 
 struct GoodServiceView: View {
     var line: APIResponse
     var body: some View {
-        ForEach(line.lineStatuses) { status in
-            VStack(spacing: 16) {
-                Image(systemName: "tram.fill")
-                    .font(.title)
-                    .foregroundColor(.secondary)
-                Text(status.statusSeverityDescription)
-                    .font(.headline)
-                    .foregroundColor(.secondary)
-            }
+        VStack(spacing: 16) {
+            Image(systemName: "tram.fill")
+                .font(.title)
+                .foregroundColor(.secondary)
+            Text("Good Service")
+                .font(.headline)
+                .foregroundColor(.secondary)
         }
     }
 }
@@ -49,16 +53,18 @@ struct PoorServiceView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
             ForEach(line.lineStatuses) { status in
-                HStack {
-                    Image(systemName: "exclamationmark.circle")
-                        .font(.headline)
-                    Text(status.statusSeverityDescription)
-                        .font(.headline)
-                }
-                if status.reason != nil {
-                    Text(status.reason!)
-                        .padding(.top, 8)
-                        .lineLimit(100)
+                VStack(alignment: .leading, spacing: 8) {
+                    HStack {
+                        Image(systemName: "exclamationmark.circle")
+                            .font(.headline)
+                        Text(status.statusSeverityDescription)
+                            .font(.headline)
+                    }
+                    if status.reason != nil {
+                        Text(status.reason!)
+                            .padding(.top, 8)
+                            .lineLimit(100)
+                    }
                 }
             }
         }

@@ -31,7 +31,7 @@ struct ContentView: View {
                     Image(systemName: "questionmark.circle.fill")
                     Text("About")
             }
-        }
+        }.edgesIgnoringSafeArea(.top)
     }
 }
 
@@ -62,6 +62,7 @@ struct AboutView: View {
             Image("GlossyAppIcon")
                 .resizable()
                 .frame(width: 128, height: 128, alignment: .center)
+                .shadow(radius: 12)
             Text("Lucid Underground")
                 .font(.headline)
             Text("An app built by Daniel Eden, using open data from Transport for London.")
