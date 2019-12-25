@@ -10,32 +10,43 @@ import SwiftUI
 
 struct ListStatusDetail: View {
     var line: APIResponse
+  
+    private func shouldShowPoorServiceView(_ lineStatuses: [TfLDisruption]) -> Bool {
+      if(lineStatuses.count > 1 || (line.lineStatuses.count > 1 && line.lineStatuses[0].statusSeverity != 10)) {
+        return true
+      } else {
+        return false
+      }
+    }
+  
+    init(line: APIResponse) {
+        self.line = line
+        // Remove only extra separators below the list:
+        #if !os(watchOS)
+          UITableView.appearance().tableFooterView = UIView()
+        #endif
+    }
+  
     var body: some View {
-        
-        ForEach(line.lineStatuses) { status in
-            if status.statusSeverity < 10 {
-                ScrollView {
-                    VStack {
-                        Rectangle().fill(TfLLine(id: self.line.id).color)
-                            .frame(height: 8)
-                        PoorServiceView(line: self.line)
-                    }
-                }
+        Group {
+          Rectangle().fill(TfLLine(id: self.line.id).color)
+            .frame(height: 8)
+          if self.shouldShowPoorServiceView(self.line.lineStatuses) {
+                List(self.line.lineStatuses) { status in
+                      PoorServiceView(status: status)
+                }.listStyle(PlainListStyle())
+              Spacer()
             } else {
-                Rectangle().fill(TfLLine(id: self.line.id).color)
-                    .frame(height: 8)
                 Spacer()
-                GoodServiceView(line: self.line)
+                GoodServiceView()
                 Spacer()
             }
         }.navigationBarTitle(self.line.name)
-        .background(Color("BackgroundWash"))
     }
 }
 
 
 struct GoodServiceView: View {
-    var line: APIResponse
     var body: some View {
         VStack(spacing: 16) {
             Image(systemName: "tram.fill")
@@ -49,31 +60,27 @@ struct GoodServiceView: View {
 }
 
 struct PoorServiceView: View {
-    var line: APIResponse
+    var status: TfLDisruption
     var body: some View {
-        VStack(alignment: .leading, spacing: 16) {
-            ForEach(line.lineStatuses) { status in
-                VStack(alignment: .leading, spacing: 8) {
-                    HStack {
-                        Image(systemName: "exclamationmark.circle")
-                            .font(.headline)
-                        Text(status.statusSeverityDescription)
-                            .font(.headline)
-                    }
-                    if status.reason != nil {
-                        Text(status.reason!)
-                            .padding(.top, 8)
-                            .lineLimit(100)
-                    }
-                }
+        VStack(alignment: .leading, spacing: 8) {
+            HStack {
+                Image(systemName: "exclamationmark.circle")
+                    .font(.headline)
+                Text(status.statusSeverityDescription)
+                    .font(.headline)
+            }
+            if status.reason != nil {
+                Text(status.reason!)
+                    .padding(.top, 4)
+                    .lineLimit(100)
             }
         }
-    .padding()
+        .padding(.vertical)
     }
 }
 
 struct ListStatusDetail_Previews: PreviewProvider {
     static var previews: some View {
-        ListStatusDetail(line: APIResponse(id: .Bakerloo, name: "Bakerloo (Test)", lineStatuses: [TfLDisruption(id: 0, lineId: "bakerloo", statusSeverity: 10, statusSeverityDescription: "Good service", reason: nil, created: "N/A")]))
+        ListStatusDetail(line: APIResponse(id: .Bakerloo, name: "Bakerloo (Test)", lineStatuses: [TfLDisruption(lineId: "bakerloo", statusSeverity: 10, statusSeverityDescription: "Good service", reason: nil, created: "N/A")]))
     }
 }

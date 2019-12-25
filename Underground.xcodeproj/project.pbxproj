@@ -10,9 +10,9 @@
 		710544D723AD541A001671E3 /* LineStatusListRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 710544D623AD541A001671E3 /* LineStatusListRow.swift */; };
 		710544D823AD542D001671E3 /* LineStatusListRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 710544D623AD541A001671E3 /* LineStatusListRow.swift */; };
 		710544D923AD5430001671E3 /* LineStatusListRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 710544D623AD541A001671E3 /* LineStatusListRow.swift */; };
-		710544E023AD6691001671E3 /* MKiCloudSync.m in Sources */ = {isa = PBXBuildFile; fileRef = 710544DE23AD6691001671E3 /* MKiCloudSync.m */; };
-		710544E223AD6691001671E3 /* MKiCloudSync.m in Sources */ = {isa = PBXBuildFile; fileRef = 710544DE23AD6691001671E3 /* MKiCloudSync.m */; };
 		710544E523AD6800001671E3 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 710544E423AD6800001671E3 /* CloudKit.framework */; };
+		7110C19E23B299C2000CB1A9 /* SyncModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7110C19D23B299C2000CB1A9 /* SyncModel.swift */; };
+		7110C19F23B29F15000CB1A9 /* SyncModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7110C19D23B299C2000CB1A9 /* SyncModel.swift */; };
 		712E160B23A9455900B56242 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 718A7A4523A8E8A9000CF24E /* Assets.xcassets */; };
 		712E160E23A946D200B56242 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 712E160D23A946D200B56242 /* Assets.xcassets */; };
 		712E161023A94D1000B56242 /* ListStatusDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 712E160F23A94D1000B56242 /* ListStatusDetail.swift */; };
@@ -127,12 +127,8 @@
 
 /* Begin PBXFileReference section */
 		710544D623AD541A001671E3 /* LineStatusListRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineStatusListRow.swift; sourceTree = "<group>"; };
-		710544DB23AD6690001671E3 /* Underground-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Underground-Bridging-Header.h"; sourceTree = "<group>"; };
-		710544DC23AD6690001671E3 /* WatchUnderground Extension-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "WatchUnderground Extension-Bridging-Header.h"; sourceTree = "<group>"; };
-		710544DD23AD6690001671E3 /* Underground tvOS-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Underground tvOS-Bridging-Header.h"; sourceTree = "<group>"; };
-		710544DE23AD6691001671E3 /* MKiCloudSync.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MKiCloudSync.m; path = "../../../../../../Downloads/MKiCloudSync-master/MKiCloudSync.m"; sourceTree = "<group>"; };
-		710544DF23AD6691001671E3 /* MKiCloudSync.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MKiCloudSync.h; path = "../../../../../../Downloads/MKiCloudSync-master/MKiCloudSync.h"; sourceTree = "<group>"; };
 		710544E423AD6800001671E3 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
+		7110C19D23B299C2000CB1A9 /* SyncModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncModel.swift; sourceTree = "<group>"; };
 		712E160D23A946D200B56242 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = ../../../../../.Trash/Assets.xcassets; sourceTree = "<group>"; };
 		712E160F23A94D1000B56242 /* ListStatusDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListStatusDetail.swift; sourceTree = "<group>"; };
 		712E161623A9732100B56242 /* Underground tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Underground tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -257,18 +253,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		710544DA23AD6676001671E3 /* Third Party */ = {
-			isa = PBXGroup;
-			children = (
-				710544DF23AD6691001671E3 /* MKiCloudSync.h */,
-				710544DE23AD6691001671E3 /* MKiCloudSync.m */,
-				710544DB23AD6690001671E3 /* Underground-Bridging-Header.h */,
-				710544DC23AD6690001671E3 /* WatchUnderground Extension-Bridging-Header.h */,
-				710544DD23AD6690001671E3 /* Underground tvOS-Bridging-Header.h */,
-			);
-			path = "Third Party";
-			sourceTree = "<group>";
-		};
 		710544E323AD6800001671E3 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -395,7 +379,6 @@
 		718A7A3E23A8E8A8000CF24E /* Underground */ = {
 			isa = PBXGroup;
 			children = (
-				710544DA23AD6676001671E3 /* Third Party */,
 				71ADC6F823A90C990073F9AE /* Underground.entitlements */,
 				718A7A6F23A8E922000CF24E /* Models */,
 				718A7A3F23A8E8A8000CF24E /* AppDelegate.swift */,
@@ -444,6 +427,7 @@
 				718A7A7023A8E935000CF24E /* APIData.swift */,
 				7177628923A8F292004E54B6 /* TfLLine.swift */,
 				71A830A123AA364C008A100E /* DeviceModel.swift */,
+				7110C19D23B299C2000CB1A9 /* SyncModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -816,7 +800,6 @@
 				712E164523A9733E00B56242 /* TfLLine.swift in Sources */,
 				712E164623A9733E00B56242 /* LineStatusList.swift in Sources */,
 				712E161923A9732100B56242 /* AppDelegate.swift in Sources */,
-				710544E223AD6691001671E3 /* MKiCloudSync.m in Sources */,
 				710544D923AD5430001671E3 /* LineStatusListRow.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -847,7 +830,7 @@
 				718A7A4023A8E8A8000CF24E /* AppDelegate.swift in Sources */,
 				718A7A4223A8E8A8000CF24E /* SceneDelegate.swift in Sources */,
 				718A7A4423A8E8A8000CF24E /* ContentView.swift in Sources */,
-				710544E023AD6691001671E3 /* MKiCloudSync.m in Sources */,
+				7110C19E23B299C2000CB1A9 /* SyncModel.swift in Sources */,
 				71A830A223AA364C008A100E /* DeviceModel.swift in Sources */,
 				7177628A23A8F292004E54B6 /* TfLLine.swift in Sources */,
 				71ADC6FD23A90E1E0073F9AE /* LineStatusList.swift in Sources */,
@@ -881,6 +864,7 @@
 				710544D823AD542D001671E3 /* LineStatusListRow.swift in Sources */,
 				71ADC6E123A90C530073F9AE /* ExtensionDelegate.swift in Sources */,
 				712E161123A94D1000B56242 /* ListStatusDetail.swift in Sources */,
+				7110C19F23B29F15000CB1A9 /* SyncModel.swift in Sources */,
 				71ADC6E523A90C530073F9AE /* NotificationView.swift in Sources */,
 				71ADC6FA23A90D3D0073F9AE /* TfLLine.swift in Sources */,
 				71ADC6FE23A90E4D0073F9AE /* LineStatusList.swift in Sources */,
@@ -1228,7 +1212,7 @@
 				CODE_SIGN_ENTITLEMENTS = Underground/Underground.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 4;
 				DERIVE_MACCATALYST_PRODUCT_BUNDLE_IDENTIFIER = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"Underground/Preview Content\"";
 				DEVELOPMENT_TEAM = YC249PY26F;
@@ -1241,7 +1225,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = toys.lucid.Underground;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTS_MACCATALYST = YES;
-				SWIFT_OBJC_BRIDGING_HEADER = "Underground/Third Party/Underground-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1256,7 +1239,7 @@
 				CODE_SIGN_ENTITLEMENTS = Underground/Underground.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 4;
 				DERIVE_MACCATALYST_PRODUCT_BUNDLE_IDENTIFIER = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"Underground/Preview Content\"";
 				DEVELOPMENT_TEAM = YC249PY26F;
@@ -1269,7 +1252,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = toys.lucid.Underground;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTS_MACCATALYST = YES;
-				SWIFT_OBJC_BRIDGING_HEADER = "Underground/Third Party/Underground-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -1365,7 +1347,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_TEAM = YC249PY26F;
 				IBSC_MODULE = WatchUnderground_Extension;
 				INFOPLIST_FILE = WatchUnderground/Info.plist;
@@ -1385,7 +1367,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_TEAM = YC249PY26F;
 				IBSC_MODULE = WatchUnderground_Extension;
 				INFOPLIST_FILE = WatchUnderground/Info.plist;
@@ -1405,7 +1387,7 @@
 				ASSETCATALOG_COMPILER_COMPLICATION_NAME = Complication;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_ASSET_PATHS = "\"WatchUnderground Extension/Preview Content\"";
 				DEVELOPMENT_TEAM = YC249PY26F;
 				ENABLE_PREVIEWS = YES;
@@ -1419,7 +1401,6 @@
 				PRODUCT_NAME = "${TARGET_NAME}";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
-				SWIFT_OBJC_BRIDGING_HEADER = "Underground/Third Party/WatchUnderground Extension-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 4;
@@ -1433,7 +1414,7 @@
 				ASSETCATALOG_COMPILER_COMPLICATION_NAME = Complication;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_ASSET_PATHS = "\"WatchUnderground Extension/Preview Content\"";
 				DEVELOPMENT_TEAM = YC249PY26F;
 				ENABLE_PREVIEWS = YES;
@@ -1447,7 +1428,6 @@
 				PRODUCT_NAME = "${TARGET_NAME}";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
-				SWIFT_OBJC_BRIDGING_HEADER = "Underground/Third Party/WatchUnderground Extension-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 4;
 				WATCHOS_DEPLOYMENT_TARGET = 6.1;

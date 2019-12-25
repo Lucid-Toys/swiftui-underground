@@ -41,14 +41,14 @@ struct LineStatusListRow: View {
     }
     
     func toggleFavourite() -> Void {
-        var favouritesArray = UserDefaults.standard.object(forKey: "syncFavourites") as? [String] ?? [String]()
+      var favouritesArray = favourites.get()
         if let i = favouritesArray.firstIndex(of: self.line.id.rawValue) {
             favouritesArray.remove(at: i)
         } else {
             favouritesArray.append(self.line.id.rawValue)
         }
         favouritesArray.sort()
-        UserDefaults.standard.set(favouritesArray, forKey: "syncFavourites")
+        favourites.set(favouritesArray)
         self.isFavourite.toggle()
         print(favouritesArray)
     }
@@ -58,7 +58,7 @@ struct StatusSummary: View {
     var lineStatuses: [TfLDisruption]
     var body: some View {
         ForEach(lineStatuses) { status in
-            if status.statusSeverityDescription != "Good Service" {
+            if status.statusSeverity != 10 {
                 PoorStatusSummary(status: status)
             } else {
                 GoodStatusSummary(status: status)

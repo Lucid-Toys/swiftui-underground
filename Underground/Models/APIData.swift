@@ -16,7 +16,7 @@ enum TfLMode: String {
 }
 
 struct TfLDisruption: Decodable, Identifiable {
-    public var id: Int
+    public var id = UUID()
     public var lineId: String?
     public var statusSeverity: Int
     public var statusSeverityDescription: String
@@ -24,7 +24,6 @@ struct TfLDisruption: Decodable, Identifiable {
     public var created: String
     
     enum CodingKeys: String, CodingKey {
-        case id = "id"
         case lineId = "lineId"
         case statusSeverity = "statusSeverity"
         case statusSeverityDescription = "statusSeverityDescription"
@@ -46,6 +45,7 @@ struct APIResponse: Decodable, Identifiable {
 }
 
 public class DataFetcher: ObservableObject {
+    let favouritesModel = SyncModel()
     @Published var lines = [APIResponse]()
     private var timer: Timer? = nil
     
@@ -65,7 +65,8 @@ public class DataFetcher: ObservableObject {
         URLSession(configuration: config).dataTask(with: url) {(data, response, error) in
             do {
                 print("Fetching underground status data")
-                let favourites = UserDefaults.standard.object(forKey: "syncFavourites") as? [String] ?? [String]()
+                let favourites = self.favouritesModel.get()
+                print(favourites)
                 if let d = data {
                     let decodedResponse = try JSONDecoder().decode([APIResponse].self, from: d)
                     DispatchQueue.main.async {
