@@ -40,7 +40,6 @@
 		718A7A7123A8E935000CF24E /* APIData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 718A7A7023A8E935000CF24E /* APIData.swift */; };
 		71A830A223AA364C008A100E /* DeviceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71A830A123AA364C008A100E /* DeviceModel.swift */; };
 		71ADC6CF23A90C500073F9AE /* Interface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 71ADC6CD23A90C500073F9AE /* Interface.storyboard */; };
-		71ADC6D123A90C520073F9AE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 71ADC6D023A90C520073F9AE /* Assets.xcassets */; };
 		71ADC6D823A90C520073F9AE /* WatchUnderground Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 71ADC6D723A90C520073F9AE /* WatchUnderground Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		71ADC6DD23A90C520073F9AE /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71ADC6DC23A90C520073F9AE /* ContentView.swift */; };
 		71ADC6DF23A90C530073F9AE /* HostingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71ADC6DE23A90C520073F9AE /* HostingController.swift */; };
@@ -184,7 +183,6 @@
 		71A830A123AA364C008A100E /* DeviceModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceModel.swift; sourceTree = "<group>"; };
 		71ADC6CB23A90C500073F9AE /* WatchUnderground.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WatchUnderground.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		71ADC6CE23A90C500073F9AE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Interface.storyboard; sourceTree = "<group>"; };
-		71ADC6D023A90C520073F9AE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		71ADC6D223A90C520073F9AE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		71ADC6D723A90C520073F9AE /* WatchUnderground Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "WatchUnderground Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		71ADC6DC23A90C520073F9AE /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -476,7 +474,6 @@
 			isa = PBXGroup;
 			children = (
 				71ADC6CD23A90C500073F9AE /* Interface.storyboard */,
-				71ADC6D023A90C520073F9AE /* Assets.xcassets */,
 				71ADC6D223A90C520073F9AE /* Info.plist */,
 			);
 			path = WatchUnderground;
@@ -772,7 +769,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				71ADC6D123A90C520073F9AE /* Assets.xcassets in Resources */,
 				712E160B23A9455900B56242 /* Assets.xcassets in Resources */,
 				71ADC6CF23A90C500073F9AE /* Interface.storyboard in Resources */,
 			);

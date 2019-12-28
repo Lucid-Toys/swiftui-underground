@@ -10,10 +10,17 @@ import SwiftUI
 
 struct LineStatusListRow: View {
     var line: APIResponse
-    @State var isFavourite: Bool
+    @State var isFavourite: Bool = false
+    
+    init(line: APIResponse) {
+        self.line = line
+        if(line.isFavourite) {
+            self.isFavourite = true
+        }
+    }
     
     var body: some View {
-        NavigationLink(destination: ListStatusDetail(line: line)) {
+        NavigationLink(destination: ListStatusDetail(line: line, isFavourite: isFavourite)) {
             HStack() {
                 Rectangle().fill(TfLLine(id: line.id).color)
                     .frame(width: 8)

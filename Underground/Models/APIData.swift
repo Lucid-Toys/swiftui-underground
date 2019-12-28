@@ -36,6 +36,7 @@ struct APIResponse: Decodable, Identifiable {
     public var id: TfLLineID
     public var name: String
     public var lineStatuses: [TfLDisruption]
+    public var isFavourite: Bool = false
     
     enum CodingKeys: String, CodingKey {
         case id = "id"
@@ -44,8 +45,19 @@ struct APIResponse: Decodable, Identifiable {
     }
 }
 
+extension APIResponse {
+    init(_ line: APIResponse, id: TfLLineID? = nil, name: String? = nil, lineStatuses: [TfLDisruption]? = nil, isFavourite: Bool? = nil) {
+        self = APIResponse(
+            id: id ?? line.id,
+            name: name ?? line.name,
+            lineStatuses: lineStatuses ?? line.lineStatuses,
+            isFavourite: isFavourite ?? line.isFavourite
+        )
+    }
+}
+
 public class DataFetcher: ObservableObject {
-    let favouritesModel = SyncModel()
+    @Published var favouritesModel = SyncModel()
     @Published var lines = [APIResponse]()
     private var timer: Timer? = nil
     
@@ -75,7 +87,10 @@ public class DataFetcher: ObservableObject {
                         let lines = decodedResponse.sorted {
                             return favourites.firstIndex(of: $0.id.rawValue) ?? Int.max < favourites.firstIndex(of: $1.id.rawValue) ?? Int.max
                         }
-                        self.lines = lines
+                        
+                        self.lines = lines.map {
+                            APIResponse($0, isFavourite: favourites.contains($0.id.rawValue))
+                        }
                     }
                 } else {
                     print("No data")

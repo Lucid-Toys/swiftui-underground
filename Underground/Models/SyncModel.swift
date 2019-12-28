@@ -8,25 +8,30 @@
 
 import Foundation
 
-class SyncModel {
-  let key = "syncUndergroundFavourites"
+class SyncModel: ObservableObject {
+    let key = "syncUndergroundFavourites"
+    @Published var value: [String] = []
   
-  init() {
-    
-  }
-  
-  func get() -> [String] {
-    #if !os(watchOS)
-    let val: [String] = NSUbiquitousKeyValueStore.default.array(forKey: key) as? [String] ?? [String]()
-    return val
-    #else
-    return [String]()
-    #endif
-  }
-  
-  func set(_ data: [String]) {
-    #if !os(watchOS)
-    NSUbiquitousKeyValueStore.default.set(data, forKey: key)
-    #endif
-  }
+    init() {
+
+    }
+
+    func get() -> [String] {
+        #if !os(watchOS)
+        objectWillChange.send()
+        let val: [String] = NSUbiquitousKeyValueStore.default.array(forKey: key) as? [String] ?? [String]()
+        self.value = val
+        return val
+        #else
+        return [String]()
+        #endif
+    }
+
+    func set(_ data: [String]) {
+        #if !os(watchOS)
+        objectWillChange.send()
+        NSUbiquitousKeyValueStore.default.set(data, forKey: key)
+        self.value = data
+        #endif
+    }
 }
