@@ -71,7 +71,7 @@ struct PoorStatusSummary: View {
     var status: TfLDisruption
     var body: some View {
         VStack(alignment: .leading, spacing: 2) {
-            HStack {
+            HStack(spacing: 4) {
                 Text(status.statusSeverityDescription)
                     .font(.subheadline)
                     .lineLimit(1)
@@ -82,6 +82,7 @@ struct PoorStatusSummary: View {
                 Text(status.reason!)
                     .lineLimit(2)
                     .font(.caption)
+                    .foregroundColor(.secondary)
             }
         }
     }

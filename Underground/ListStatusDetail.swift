@@ -12,7 +12,7 @@ struct ListStatusDetail: View {
     var line: APIResponse
   
     private func shouldShowPoorServiceView(_ lineStatuses: [TfLDisruption]) -> Bool {
-      if(lineStatuses.count > 1 || (line.lineStatuses.count > 1 && line.lineStatuses[0].statusSeverity != 10)) {
+      if(lineStatuses.count > 1 || (line.lineStatuses.count >= 1 && line.lineStatuses[0].statusSeverity != 10)) {
         return true
       } else {
         return false
@@ -35,7 +35,6 @@ struct ListStatusDetail: View {
                 List(self.line.lineStatuses) { status in
                       PoorServiceView(status: status)
                 }.listStyle(PlainListStyle())
-              Spacer()
             } else {
                 Spacer()
                 GoodServiceView()

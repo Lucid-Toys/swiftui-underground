@@ -64,9 +64,11 @@ public class DataFetcher: ObservableObject {
         
         URLSession(configuration: config).dataTask(with: url) {(data, response, error) in
             do {
-                print("Fetching underground status data")
                 let favourites = self.favouritesModel.get()
-                print(favourites)
+                #if DEBUG
+                print("Fetching underground status data...")
+                print("Favourites: \(favourites)")
+                #endif
                 if let d = data {
                     let decodedResponse = try JSONDecoder().decode([APIResponse].self, from: d)
                     DispatchQueue.main.async {
