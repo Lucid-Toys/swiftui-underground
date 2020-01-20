@@ -9,7 +9,7 @@
 import SwiftUI  
 
 struct ContentView: View {
-    @ObservedObject var data = DataFetcher()
+    @EnvironmentObject var data: UndergroundDataFetcher
     @EnvironmentObject var device: DeviceModel
     
     var body: some View {
@@ -36,7 +36,7 @@ struct ContentView: View {
 }
 
 struct PortraitModeMainView: View {
-    var data: DataFetcher
+    var data: UndergroundDataFetcher
     var body: some View {
         NavigationView {
             LineStatusList(data: data)
@@ -47,7 +47,7 @@ struct PortraitModeMainView: View {
 }
 
 struct LandscapeModeMainView: View {
-    var data: DataFetcher
+    var data: UndergroundDataFetcher
     var body: some View {
         NavigationView {
             LineStatusList(data: data)

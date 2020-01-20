@@ -72,11 +72,12 @@ struct PoorStatusSummary: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 2) {
             HStack(spacing: 4) {
+                Image(systemName: "exclamationmark.triangle.fill")
+                    .font(.caption)
                 Text(status.statusSeverityDescription)
                     .font(.subheadline)
                     .lineLimit(1)
-                Image(systemName: "exclamationmark.triangle")
-            }
+                }
             .foregroundColor(status.statusSeverity < 6 ? Color("Red") : Color("Yellow"))
             if status.reason != nil {
                 Text(status.reason!)
@@ -92,14 +93,14 @@ struct GoodStatusSummary: View {
     var status: TfLDisruption
     var body: some View {
         Text(status.statusSeverityDescription)
-        .font(.subheadline)
+        .font(.caption)
         .foregroundColor(.secondary)
     }
 }
 
 struct LineStatusList_Previews: PreviewProvider {
     static var previews: some View {
-        LineStatusList(data: DataFetcher())
+        LineStatusList(data: UndergroundDataFetcher())
     }
 }
 

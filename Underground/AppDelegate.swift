@@ -7,14 +7,50 @@
 //
 
 import UIKit
+import BackgroundTasks
+import os.log
+
+let fetcher = UndergroundDataFetcher()
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        // MARK: Register background fetching
+        BGTaskScheduler.shared.register(forTaskWithIdentifier: "toys.lucid.underground.bgFetch", using: nil) { task in
+            self.performBackgroundDataRefresh(task as! BGAppRefreshTask)
+        }
         
         return true
+    }
+    
+    // MARK: Scheduler for future background fetching
+    func scheduleDataFetcher() {
+        print("Scheduling data fetcher")
+        let request = BGAppRefreshTaskRequest(identifier: "toys.lucid.underground.bgFetch")
+        request.earliestBeginDate = Date(timeIntervalSinceNow: 1 * 60)
+        do {
+            try BGTaskScheduler.shared.submit(request)
+        } catch {
+            os_log("Could not schedule data fetch", type: .error)
+            print("\(error)")
+        }
+    }
+    
+    // MARK: Attempt background fetching
+    func performBackgroundDataRefresh(_ task: BGAppRefreshTask) {
+        task.expirationHandler = {
+            task.setTaskCompleted(success: false)
+            fetcher.urlSession.invalidateAndCancel()
+        }
+        
+        fetcher.load({(success) -> Void in
+            print("Fetched in background with success: \(success)")
+            task.setTaskCompleted(success: success)
+        })
+        
+        scheduleDataFetcher()
     }
 
     // MARK: UISceneSession Lifecycle

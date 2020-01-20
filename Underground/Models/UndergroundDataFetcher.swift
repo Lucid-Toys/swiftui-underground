@@ -7,6 +7,13 @@
 //
 
 import Foundation
+import Network
+
+typealias CompletionHandler = (_ success: Bool) -> Void
+
+enum DataState {
+    case Loading, Loaded, Offline, Stale
+}
 
 enum TfLMode: String {
     case Tube = "tube"
@@ -44,45 +51,83 @@ struct APIResponse: Decodable, Identifiable {
     }
 }
 
-public class DataFetcher: ObservableObject {
+public class UndergroundDataFetcher: ObservableObject {
+    let config = URLSessionConfiguration.default
+    let urlSession: URLSession
     let favouritesModel = SyncModel()
     @Published var lines = [APIResponse]()
+    @Published var dataState: DataState = .Stale
+    @Published var lastUpdated: Date = Date()
     private var timer: Timer? = nil
+    let networkMonitor = NWPathMonitor()
     
     init() {
-        timer = Timer.scheduledTimer(withTimeInterval: 3.0, repeats: true) { _ in
+        config.waitsForConnectivity = true
+        urlSession = URLSession(configuration: config)
+        timer = Timer.scheduledTimer(withTimeInterval: 5.0, repeats: true) { _ in
             self.load()
         }
         load()
+        
+        networkMonitor.pathUpdateHandler = { path in
+            if path.status == .satisfied {
+                DispatchQueue.main.async {
+                    self.dataState = .Stale
+                    print("Network connection detected")
+                }
+                
+            } else {
+                DispatchQueue.main.async {
+                    self.dataState = .Offline
+                    print("No network connection")
+                }
+            }
+        }
+        
+        let queue = DispatchQueue(label: "Monitor")
+        networkMonitor.start(queue: queue)
     }
     
-    func load() {
+    func load(_ completionHandler: CompletionHandler? = nil) {
         let url = URL(string: "https://underground.lucid.toys/api/data")!
         
-        let config = URLSessionConfiguration.default
-        config.waitsForConnectivity = true
-        
-        URLSession(configuration: config).dataTask(with: url) {(data, response, error) in
+        urlSession.dataTask(with: url) {(data, response, error) in
             do {
+                DispatchQueue.main.sync {
+                    self.dataState = .Loading
+                }
                 let favourites = self.favouritesModel.get()
                 #if DEBUG
+                print("State is \(self.dataState)")
                 print("Fetching underground status data...")
                 print("Favourites: \(favourites)")
                 #endif
                 if let d = data {
                     let decodedResponse = try JSONDecoder().decode([APIResponse].self, from: d)
-                    DispatchQueue.main.async {
+                    DispatchQueue.main.sync {
                         let lines = decodedResponse.sorted {
                             return favourites.firstIndex(of: $0.id.rawValue) ?? Int.max < favourites.firstIndex(of: $1.id.rawValue) ?? Int.max
                         }
                         self.lines = lines
+                        self.dataState = .Loaded
+                        self.lastUpdated = Date()
+                        print("State is \(self.dataState)")
+                        print("Updated at \(self.lastUpdated)\n")
                     }
                 } else {
-                    print("No data")
+                    print("No data received from Lucid Underground API.")
+                }
+                
+                if(completionHandler != nil) {
+                    completionHandler!(true)
                 }
             } catch {
                 print(error)
                 print("Error fetching line statuses")
+                
+                if(completionHandler != nil) {
+                    completionHandler!(false)
+                }
             }
         }.resume()
     }
