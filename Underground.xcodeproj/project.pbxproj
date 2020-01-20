@@ -27,6 +27,8 @@
 		712E164523A9733E00B56242 /* TfLLine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7177628923A8F292004E54B6 /* TfLLine.swift */; };
 		712E164623A9733E00B56242 /* LineStatusList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71ADC6FC23A90E1E0073F9AE /* LineStatusList.swift */; };
 		712E164723A9733E00B56242 /* ListStatusDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 712E160F23A94D1000B56242 /* ListStatusDetail.swift */; };
+		7158321523D648E5002F591D /* UpdatingLiveIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7158321423D648E5002F591D /* UpdatingLiveIndicator.swift */; };
+		7158321623D648F9002F591D /* UpdatingLiveIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7158321423D648E5002F591D /* UpdatingLiveIndicator.swift */; };
 		7177628A23A8F292004E54B6 /* TfLLine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7177628923A8F292004E54B6 /* TfLLine.swift */; };
 		718A7A4023A8E8A8000CF24E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 718A7A3F23A8E8A8000CF24E /* AppDelegate.swift */; };
 		718A7A4223A8E8A8000CF24E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 718A7A4123A8E8A8000CF24E /* SceneDelegate.swift */; };
@@ -153,6 +155,7 @@
 		712E166523A9792800B56242 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		712E166E23A9792900B56242 /* Underground_macOSUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Underground_macOSUITests.swift; sourceTree = "<group>"; };
 		712E167023A9792900B56242 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		7158321423D648E5002F591D /* UpdatingLiveIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdatingLiveIndicator.swift; sourceTree = "<group>"; };
 		7177628923A8F292004E54B6 /* TfLLine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TfLLine.swift; sourceTree = "<group>"; };
 		718A7A3C23A8E8A8000CF24E /* Underground.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Underground.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		718A7A3F23A8E8A8000CF24E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -384,6 +387,7 @@
 				718A7A4123A8E8A8000CF24E /* SceneDelegate.swift */,
 				718A7A4323A8E8A8000CF24E /* ContentView.swift */,
 				71ADC6FC23A90E1E0073F9AE /* LineStatusList.swift */,
+				7158321423D648E5002F591D /* UpdatingLiveIndicator.swift */,
 				710544D623AD541A001671E3 /* LineStatusListRow.swift */,
 				712E160F23A94D1000B56242 /* ListStatusDetail.swift */,
 				718A7A4523A8E8A9000CF24E /* Assets.xcassets */,
@@ -825,6 +829,7 @@
 				710544D723AD541A001671E3 /* LineStatusListRow.swift in Sources */,
 				718A7A7123A8E935000CF24E /* UndergroundDataFetcher.swift in Sources */,
 				712E161023A94D1000B56242 /* ListStatusDetail.swift in Sources */,
+				7158321523D648E5002F591D /* UpdatingLiveIndicator.swift in Sources */,
 				718A7A4023A8E8A8000CF24E /* AppDelegate.swift in Sources */,
 				718A7A4223A8E8A8000CF24E /* SceneDelegate.swift in Sources */,
 				718A7A4423A8E8A8000CF24E /* ContentView.swift in Sources */,
@@ -862,6 +867,7 @@
 				710544D823AD542D001671E3 /* LineStatusListRow.swift in Sources */,
 				71ADC6E123A90C530073F9AE /* ExtensionDelegate.swift in Sources */,
 				712E161123A94D1000B56242 /* ListStatusDetail.swift in Sources */,
+				7158321623D648F9002F591D /* UpdatingLiveIndicator.swift in Sources */,
 				7110C19F23B29F15000CB1A9 /* SyncModel.swift in Sources */,
 				71ADC6E523A90C530073F9AE /* NotificationView.swift in Sources */,
 				71ADC6FA23A90D3D0073F9AE /* TfLLine.swift in Sources */,

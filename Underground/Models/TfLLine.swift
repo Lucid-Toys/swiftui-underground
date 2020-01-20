@@ -38,7 +38,7 @@ struct TfLLineColor {
         TfLLineID.Metropolitan: Color(red:0.46, green:0.06, blue:0.34),
         TfLLineID.Northen: Color(red:0.10, green:0.10, blue:0.10),
         TfLLineID.Overground: Color(red:0.91, green:0.42, blue:0.06),
-        TfLLineID.Piccadilly: Color(red:0.00, green:0.10, blue:0.66),
+        TfLLineID.Piccadilly: Color(red:0.10, green:0.2, blue:0.8),
         TfLLineID.TfLRail: Color(red:0.00, green:0.10, blue:0.66),
         TfLLineID.Victoria: Color(red:0.02, green:0.63, blue:0.89),
         TfLLineID.WaterlooCity: Color(red:0.47, green:0.82, blue:0.74)
