@@ -11,7 +11,6 @@
 		710544D823AD542D001671E3 /* LineStatusListRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 710544D623AD541A001671E3 /* LineStatusListRow.swift */; };
 		710544D923AD5430001671E3 /* LineStatusListRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 710544D623AD541A001671E3 /* LineStatusListRow.swift */; };
 		710544E523AD6800001671E3 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 710544E423AD6800001671E3 /* CloudKit.framework */; };
-		711070F923D6033300876F3B /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 711070F823D6033300876F3B /* Color.swift */; };
 		711070FA23D60E2D00876F3B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 711070F623D5FFA000876F3B /* Assets.xcassets */; };
 		7110C19E23B299C2000CB1A9 /* SyncModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7110C19D23B299C2000CB1A9 /* SyncModel.swift */; };
 		7110C19F23B29F15000CB1A9 /* SyncModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7110C19D23B299C2000CB1A9 /* SyncModel.swift */; };
@@ -129,7 +128,6 @@
 		710544D623AD541A001671E3 /* LineStatusListRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineStatusListRow.swift; sourceTree = "<group>"; };
 		710544E423AD6800001671E3 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
 		711070F623D5FFA000876F3B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		711070F823D6033300876F3B /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
 		7110C19D23B299C2000CB1A9 /* SyncModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncModel.swift; sourceTree = "<group>"; };
 		712E160F23A94D1000B56242 /* ListStatusDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListStatusDetail.swift; sourceTree = "<group>"; };
 		712E161623A9732100B56242 /* Underground tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Underground tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -262,14 +260,6 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		711070F723D6032300876F3B /* Extensions */ = {
-			isa = PBXGroup;
-			children = (
-				711070F823D6033300876F3B /* Color.swift */,
-			);
-			path = Extensions;
-			sourceTree = "<group>";
-		};
 		712E161723A9732100B56242 /* Underground tvOS */ = {
 			isa = PBXGroup;
 			children = (
@@ -388,7 +378,6 @@
 		718A7A3E23A8E8A8000CF24E /* Underground */ = {
 			isa = PBXGroup;
 			children = (
-				711070F723D6032300876F3B /* Extensions */,
 				71ADC6F823A90C990073F9AE /* Underground.entitlements */,
 				718A7A6F23A8E922000CF24E /* Models */,
 				718A7A3F23A8E8A8000CF24E /* AppDelegate.swift */,
@@ -835,7 +824,6 @@
 			files = (
 				710544D723AD541A001671E3 /* LineStatusListRow.swift in Sources */,
 				718A7A7123A8E935000CF24E /* UndergroundDataFetcher.swift in Sources */,
-				711070F923D6033300876F3B /* Color.swift in Sources */,
 				712E161023A94D1000B56242 /* ListStatusDetail.swift in Sources */,
 				718A7A4023A8E8A8000CF24E /* AppDelegate.swift in Sources */,
 				718A7A4223A8E8A8000CF24E /* SceneDelegate.swift in Sources */,
