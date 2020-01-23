@@ -198,7 +198,7 @@
 		71ADC6EB23A90C540073F9AE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		71ADC6EC23A90C540073F9AE /* PushNotificationPayload.apns */ = {isa = PBXFileReference; lastKnownFileType = text; path = PushNotificationPayload.apns; sourceTree = "<group>"; };
 		71ADC6F823A90C990073F9AE /* Underground.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Underground.entitlements; sourceTree = "<group>"; };
-		71ADC6FC23A90E1E0073F9AE /* LineStatusList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineStatusList.swift; sourceTree = "<group>"; };
+		71ADC6FC23A90E1E0073F9AE /* LineStatusList.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = LineStatusList.swift; sourceTree = "<group>"; tabWidth = 2; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */

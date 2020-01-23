@@ -22,7 +22,6 @@ struct LineStatusList: View {
         LineStatusListRow(line: line, isFavourite: favourites.get().contains(line.id.rawValue))
       }
       .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 8))
-      .animation(.default)
     }
     .navigationBarTitle("Underground Status")
     // The minimum list row height is set so that UpdatingLiveIndicator
