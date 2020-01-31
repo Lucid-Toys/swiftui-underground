@@ -9,99 +9,95 @@
 import SwiftUI
 
 struct LineStatusListRow: View {
-    var line: APIResponse
-    @State var isFavourite: Bool
-    
-    var body: some View {
-        NavigationLink(destination: ListStatusDetail(line: line)) {
-            HStack() {
-                Rectangle().fill(TfLLine(id: line.id).color)
-                    .frame(width: 8)
-                VStack(alignment: .leading, spacing: 2) {
-                    HStack {
-                        Text(line.name)
-                            .font(.headline)
-                            .lineLimit(1)
-                        Spacer()
-                        if isFavourite {
-                            Image(systemName: "star.fill")
-                                .foregroundColor(.secondary)
-                                .font(.caption)
-                        }
-                    }
-                    StatusSummary(lineStatuses: line.lineStatuses)
-                }.padding(8)
-            }.contextMenu {
-                Button(action: { self.toggleFavourite() }) {
-                    Image(systemName: isFavourite ? "star.slash.fill" : "star")
-                    Text(isFavourite ? "Unfavourite Line" : "Favourite Line")
-                }
+  var line: APIResponse
+  var isFavourite: Bool
+  @State var isPresented = false
+  
+  var body: some View {
+    Button(action: {
+      self.isPresented.toggle()
+    }) {
+      VStack(spacing: 0) {
+        Rectangle().fill(TfLLine(id: line.id).color)
+          .frame(height: 8)
+        VStack(alignment: .leading, spacing: 2) {
+          HStack {
+            Text(line.name)
+              .font(.headline)
+              .lineLimit(1)
+            Spacer()
+            if isFavourite {
+              Image(systemName: "star.fill")
+                .foregroundColor(.secondary)
+                .font(.caption)
             }
-        }
+          }
+          StatusSummary(lineStatuses: line.lineStatuses)
+        }.padding(8)
+      }
     }
-    
-    func toggleFavourite() -> Void {
-      var favouritesArray = favourites.get()
-        if let i = favouritesArray.firstIndex(of: self.line.id.rawValue) {
-            favouritesArray.remove(at: i)
-        } else {
-            favouritesArray.append(self.line.id.rawValue)
-        }
-        favouritesArray.sort()
-        favourites.set(favouritesArray)
-        self.isFavourite.toggle()
-        print(favouritesArray)
+    .buttonStyle(PlainButtonStyle())
+    .background(Color("SecondaryBackground"))
+    .foregroundColor(.primary)
+    .cornerRadius(12)
+    .sheet(isPresented: $isPresented) {
+      #if !os(watchOS)
+      ListStatusDetail(line: self.line, isFavourite: self.isFavourite)
+      #else
+      WatchLineStatusDetail(line: self.line, isFavourite: self.isFavourite)
+      #endif
     }
+  }
 }
 
 struct StatusSummary: View {
-    var lineStatuses: [TfLDisruption]
-    var body: some View {
-        ForEach(lineStatuses) { status in
-            if status.statusSeverity != 10 {
-                PoorStatusSummary(status: status)
-            } else {
-                GoodStatusSummary(status: status)
-            }
-        }
+  var lineStatuses: [TfLDisruption]
+  var body: some View {
+    ForEach(lineStatuses) { status in
+      if status.statusSeverity != 10 {
+        PoorStatusSummary(status: status)
+      } else {
+        GoodStatusSummary(status: status)
+      }
     }
+  }
 }
 
 struct PoorStatusSummary: View {
-    var status: TfLDisruption
-    var body: some View {
-        VStack(alignment: .leading, spacing: 2) {
-            HStack(spacing: 4) {
-                Image(systemName: "exclamationmark.triangle.fill")
-                    .font(.caption)
-                Text(status.statusSeverityDescription)
-                    .font(.subheadline)
-                    .lineLimit(1)
-                }
-            .foregroundColor(status.statusSeverity < 6 ? Color("Red") : Color("Yellow"))
-            if status.reason != nil {
-                Text(status.reason!)
-                    .lineLimit(2)
-                    .font(.caption)
-                    .foregroundColor(.secondary)
-            }
-        }
+  var status: TfLDisruption
+  var body: some View {
+    VStack(alignment: .leading, spacing: 2) {
+      HStack(spacing: 4) {
+        Image(systemName: "exclamationmark.triangle.fill")
+          .font(.caption)
+        Text(status.statusSeverityDescription)
+          .font(.subheadline)
+          .lineLimit(1)
+      }
+      .foregroundColor(status.statusSeverity < 6 ? Color("Red") : Color("Yellow"))
+      if status.reason != nil {
+        Text(status.reason!)
+          .lineLimit(2)
+          .font(.caption)
+          .foregroundColor(.secondary)
+      }
     }
+  }
 }
 
 struct GoodStatusSummary: View {
-    var status: TfLDisruption
-    var body: some View {
-        Text(status.statusSeverityDescription)
-        .font(.caption)
-        .foregroundColor(.secondary)
-    }
+  var status: TfLDisruption
+  var body: some View {
+    Text(status.statusSeverityDescription)
+      .font(.caption)
+      .foregroundColor(.secondary)
+  }
 }
 
 struct LineStatusList_Previews: PreviewProvider {
-    static var previews: some View {
-        LineStatusList(data: UndergroundDataFetcher())
-    }
+  static var previews: some View {
+    LineStatusList(data: UndergroundDataFetcher())
+  }
 }
 
 //struct LineStatusListRow_Previews: PreviewProvider {

@@ -45,14 +45,21 @@ struct UpdatingLiveIndicator: View {
           }
           Text("Fetching status...")
         }
+      } else if (status == .Spotty) {
+        HStack(alignment: .top) {
+          Image(systemName: "wifi.exclamationmark")
+            .padding(.top, 2)
+          VStack(alignment: .leading) {
+            Text("Still trying...")
+              .fontWeight(.bold)
+            #if !os(watchOS)
+            Text("Last updated at \(formatter.string(from: self.lastUpdated))")
+            #endif
+          }
+        }
       } else {
         HStack {
           Image(systemName: "wifi")
-            .opacity(self.opacity)
-            .animation(Animation.easeInOut(duration: 2).repeatForever(autoreverses: true))
-            .onAppear() {
-              self.opacity = 0.3
-          }
           Text("Updating Live")
         }
       }
@@ -60,9 +67,8 @@ struct UpdatingLiveIndicator: View {
     }
     .padding(.horizontal, 12)
     .padding(.vertical, 8)
-    .background(status != .Offline ? Color("Interactive") : Color("Yellow"))
-    .foregroundColor(status != .Offline ? .white : .black)
-    .animation(.default)
+    .background(status != .Offline ? .clear : Color("Yellow"))
+    .foregroundColor(status != .Offline ? .secondary : .black)
     .font(.caption)
   }
 }
@@ -70,9 +76,10 @@ struct UpdatingLiveIndicator: View {
 struct UpdatingLiveIndicator_Previews: PreviewProvider {
   static var previews: some View {
     VStack(spacing:2) {
-      UpdatingLiveIndicator(status: .Offline, lastUpdated: Date())
-      UpdatingLiveIndicator(status: .Loaded, lastUpdated: Date())
       UpdatingLiveIndicator(status: .Loading, lastUpdated: Date())
+      UpdatingLiveIndicator(status: .Loaded, lastUpdated: Date())
+      UpdatingLiveIndicator(status: .Spotty, lastUpdated: Date())
+      UpdatingLiveIndicator(status: .Offline, lastUpdated: Date())
     }
     .previewDevice(.none)
     .previewLayout(.sizeThatFits)

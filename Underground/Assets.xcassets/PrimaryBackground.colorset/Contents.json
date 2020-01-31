@@ -7,13 +7,8 @@
     {
       "idiom" : "universal",
       "color" : {
-        "color-space" : "display-p3",
-        "components" : {
-          "red" : "0.944",
-          "alpha" : "1.000",
-          "blue" : "0.216",
-          "green" : "0.605"
-        }
+        "platform" : "ios",
+        "reference" : "systemBackgroundColor"
       }
     },
     {
@@ -25,13 +20,8 @@
         }
       ],
       "color" : {
-        "color-space" : "display-p3",
-        "components" : {
-          "red" : "0.975",
-          "alpha" : "1.000",
-          "blue" : "0.290",
-          "green" : "0.845"
-        }
+        "platform" : "ios",
+        "reference" : "systemBackgroundColor"
       }
     },
     {
@@ -39,10 +29,10 @@
       "color" : {
         "color-space" : "display-p3",
         "components" : {
-          "red" : "0.975",
+          "red" : "0.000",
           "alpha" : "1.000",
-          "blue" : "0.290",
-          "green" : "0.845"
+          "blue" : "0.000",
+          "green" : "0.000"
         }
       }
     }
