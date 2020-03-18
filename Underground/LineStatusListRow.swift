@@ -35,6 +35,7 @@ struct LineStatusListRow: View {
           StatusSummary(lineStatuses: line.lineStatuses)
         }.padding(8)
       }
+    .contentShape(Rectangle())
     }
     .buttonStyle(PlainButtonStyle())
     .background(Color("SecondaryBackground"))
