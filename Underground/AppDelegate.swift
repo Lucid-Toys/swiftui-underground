@@ -15,16 +15,16 @@ let fetcher = UndergroundDataFetcher()
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
-
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // MARK: Register background fetching
         BGTaskScheduler.shared.register(forTaskWithIdentifier: "toys.lucid.underground.bgFetch", using: nil) { task in
+            // swiftlint:disable force_cast
             self.performBackgroundDataRefresh(task as! BGAppRefreshTask)
         }
-        
+
         return true
     }
-    
+
     // MARK: Scheduler for future background fetching
     func scheduleDataFetcher() {
         print("Scheduling data fetcher")
@@ -37,19 +37,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             print("\(error)")
         }
     }
-    
+
     // MARK: Attempt background fetching
     func performBackgroundDataRefresh(_ task: BGAppRefreshTask) {
         task.expirationHandler = {
             task.setTaskCompleted(success: false)
             fetcher.urlSession.invalidateAndCancel()
         }
-        
+
         fetcher.load({(success) -> Void in
             print("Fetched in background with success: \(success)")
             task.setTaskCompleted(success: success)
         })
-        
+
         scheduleDataFetcher()
     }
 
@@ -67,6 +67,4 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Use this method to release any resources that were specific to the discarded scenes, as they will not return.
     }
 
-
 }
-

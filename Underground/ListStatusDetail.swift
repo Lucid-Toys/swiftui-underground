@@ -6,6 +6,8 @@
 //  Copyright © 2019 Daniel Eden. All rights reserved.
 //
 
+// swiftlint:disable multiple_closures_with_trailing_closure
+
 import SwiftUI
 
 #if os(watchOS)
@@ -15,7 +17,7 @@ import SwiftUI
 #endif
 
 func shouldShowPoorServiceView(_ lineStatuses: [TfLDisruption]) -> Bool {
-  if(lineStatuses.count > 1 || (lineStatuses.count >= 1 && lineStatuses[0].statusSeverity != 10)) {
+  if lineStatuses.count > 1 || (lineStatuses.count >= 1 && lineStatuses[0].statusSeverity != 10) {
     return true
   } else {
     return false
@@ -26,15 +28,15 @@ struct ListStatusDetail: View {
   @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
   var line: APIResponse
   @State var isFavourite: Bool
-  
+
   private func shouldShowPoorServiceView(_ lineStatuses: [TfLDisruption]) -> Bool {
-    if(lineStatuses.count > 1 || (line.lineStatuses.count >= 1 && line.lineStatuses[0].statusSeverity != 10)) {
+    if lineStatuses.count > 1 || (line.lineStatuses.count >= 1 && line.lineStatuses[0].statusSeverity != 10) {
       return true
     } else {
       return false
     }
   }
-  
+
   var body: some View {
     ContainerView {
       HStack {
@@ -45,7 +47,7 @@ struct ListStatusDetail: View {
         Spacer()
       }
       .padding()
-      .background(TfLLine(id: self.line.id).color.opacity(0.9))
+      .background(TfLLine(lineId: self.line.id).color.opacity(0.9))
       .background(Color.black)
       VStack(alignment: .leading) {
         VStack(alignment: .leading) {
@@ -57,13 +59,13 @@ struct ListStatusDetail: View {
             GoodServiceView()
           }
         }
-        
+
         Spacer()
-        
+
         Button(action: {
           self.toggleFavourite()
         }) {
-          if(self.isFavourite) {
+          if self.isFavourite {
             HStack {
               Spacer()
               Image(systemName: "star.fill")
@@ -83,7 +85,7 @@ struct ListStatusDetail: View {
         .background(self.isFavourite ? Color("Interactive") : Color("TertiaryBackground"))
         .foregroundColor(self.isFavourite ? .white : .accentColor)
         .cornerRadius(8)
-        
+
         Button(action: {
           self.presentationMode.wrappedValue.dismiss()
         }) {
@@ -101,11 +103,11 @@ struct ListStatusDetail: View {
     }
     .background(Color("SecondaryBackground"))
   }
-  
-  func toggleFavourite() -> Void {
+
+  func toggleFavourite() {
     var favouritesArray = favourites.get()
-    if let i = favouritesArray.firstIndex(of: self.line.id.rawValue) {
-      favouritesArray.remove(at: i)
+    if let index = favouritesArray.firstIndex(of: self.line.id.rawValue) {
+      favouritesArray.remove(at: index)
     } else {
       favouritesArray.append(self.line.id.rawValue)
     }
@@ -115,7 +117,6 @@ struct ListStatusDetail: View {
     print(favouritesArray)
   }
 }
-
 
 struct GoodServiceView: View {
   var body: some View {

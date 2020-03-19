@@ -10,11 +10,11 @@ import Foundation
 
 class SyncModel {
   let key = "syncUndergroundFavourites"
-  
+
   init() {
-    
+
   }
-  
+
   func get() -> [String] {
     #if !os(watchOS)
     let val: [String] = NSUbiquitousKeyValueStore.default.array(forKey: key) as? [String] ?? [String]()
@@ -23,7 +23,7 @@ class SyncModel {
     return [String]()
     #endif
   }
-  
+
   func set(_ data: [String]) {
     #if !os(watchOS)
     NSUbiquitousKeyValueStore.default.set(data, forKey: key)

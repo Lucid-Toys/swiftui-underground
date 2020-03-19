@@ -29,15 +29,20 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             #else
                 device.isLandscape = true
             #endif
-            
+
             let window = UIWindow(windowScene: windowScene)
             window.rootViewController = UIHostingController(rootView: contentView)
             self.window = window
             window.makeKeyAndVisible()
         }
     }
-    
-    func windowScene(_ windowScene: UIWindowScene, didUpdate previousCoordinateSpace: UICoordinateSpace, interfaceOrientation previousInterfaceOrientation: UIInterfaceOrientation, traitCollection previousTraitCollection: UITraitCollection) {
+
+    func windowScene(
+      _ windowScene: UIWindowScene,
+      didUpdate previousCoordinateSpace: UICoordinateSpace,
+      interfaceOrientation previousInterfaceOrientation: UIInterfaceOrientation,
+      traitCollection previousTraitCollection: UITraitCollection
+    ) {
         #if !targetEnvironment(macCatalyst)
             device.isLandscape.toggle()
         #endif
@@ -70,9 +75,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Called as the scene transitions from the foreground to the background.
         // Use this method to save data, release shared resources, and store enough scene-specific state information
         // to restore the scene back to its current state.
+        // swiftlint:disable force_cast
         (UIApplication.shared.delegate as! AppDelegate).scheduleDataFetcher()
     }
 
-
 }
-

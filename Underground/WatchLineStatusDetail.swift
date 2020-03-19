@@ -6,20 +6,23 @@
 //  Copyright © 2019 Daniel Eden. All rights reserved.
 //
 
+// swiftlint:disable multiple_closures_with_trailing_closure
+
 import SwiftUI
 
 struct WatchLineStatusDetail: View {
   @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
   var line: APIResponse
   @State var isFavourite: Bool
-  
+
+  // swiftlint:disable identifier_name
   let FavouriteButton: some View = HStack {
     Spacer()
     Image(systemName: "star.fill")
     Text("Unfavourite")
     Spacer()
   }
-  
+
   var body: some View {
     ContainerView {
       VStack(alignment: .leading) {
@@ -31,8 +34,8 @@ struct WatchLineStatusDetail: View {
           Spacer()
         }
         .padding()
-        .background(TfLLine(id: self.line.id).color.opacity(0.5))
-        
+        .background(TfLLine(lineId: self.line.id).color.opacity(0.5))
+
         if shouldShowPoorServiceView(self.line.lineStatuses) {
           ForEach(self.line.lineStatuses) { status in
             PoorServiceView(status: status)
@@ -42,9 +45,9 @@ struct WatchLineStatusDetail: View {
         }
       }
       .cornerRadius(8, antialiased: true)
-      
+
       Spacer()
-      
+
       Button(action: {
         self.presentationMode.wrappedValue.dismiss()
       }) {

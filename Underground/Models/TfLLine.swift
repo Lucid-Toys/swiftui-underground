@@ -10,57 +10,58 @@ import Foundation
 import SwiftUI
 
 enum TfLLineID: String, Decodable {
-    case Bakerloo = "bakerloo"
-    case Central = "central"
-    case Circle = "circle"
-    case District = "district"
+    case bakerloo = "bakerloo"
+    case central = "central"
+    case circle = "circle"
+    case district = "district"
     case DLR = "dlr"
-    case HammersmithCity = "hammersmith-city"
-    case Jubilee = "jubilee"
-    case Metropolitan = "metropolitan"
-    case Northen = "northern"
-    case Overground = "london-overground"
-    case Piccadilly = "piccadilly"
-    case TfLRail = "tfl-rail"
-    case Victoria = "victoria"
-    case WaterlooCity = "waterloo-city"
+    case hammersmithCity = "hammersmith-city"
+    case jubilee = "jubilee"
+    case metropolitan = "metropolitan"
+    case northen = "northern"
+    case overground = "london-overground"
+    case piccadilly = "piccadilly"
+    case tfLRail = "tfl-rail"
+    case victoria = "victoria"
+    case waterlooCity = "waterloo-city"
 }
 
 struct TfLLineColor {
-    var color: [TfLLineID:Color] = [
-        TfLLineID.Bakerloo: Color(red:0.54, green:0.31, blue:0.14),
-        TfLLineID.Central: Color(red:0.87, green:0.15, blue:0.12),
-        TfLLineID.Circle: Color(red:0.89, green:0.71, blue:0.00),
-        TfLLineID.District: Color(red:0.00, green:0.45, blue:0.16),
-        TfLLineID.DLR: Color(red:0.00, green:0.69, blue:0.68),
-        TfLLineID.HammersmithCity: Color(red:0.84, green:0.60, blue:0.69),
-        TfLLineID.Jubilee: Color(red:0.42, green:0.45, blue:0.47),
-        TfLLineID.Metropolitan: Color(red:0.46, green:0.06, blue:0.34),
-        TfLLineID.Northen: Color(red:0.10, green:0.10, blue:0.10),
-        TfLLineID.Overground: Color(red:0.91, green:0.42, blue:0.06),
-        TfLLineID.Piccadilly: Color(red:0.10, green:0.2, blue:0.8),
-        TfLLineID.TfLRail: Color(red:0.00, green:0.10, blue:0.66),
-        TfLLineID.Victoria: Color(red:0.02, green:0.63, blue:0.89),
-        TfLLineID.WaterlooCity: Color(red:0.47, green:0.82, blue:0.74)
+    var color: [TfLLineID: Color] = [
+        TfLLineID.bakerloo: Color(red: 0.54, green: 0.31, blue: 0.14),
+        TfLLineID.central: Color(red: 0.87, green: 0.15, blue: 0.12),
+        TfLLineID.circle: Color(red: 0.89, green: 0.71, blue: 0.00),
+        TfLLineID.district: Color(red: 0.00, green: 0.45, blue: 0.16),
+        TfLLineID.DLR: Color(red: 0.00, green: 0.69, blue: 0.68),
+        TfLLineID.hammersmithCity: Color(red: 0.84, green: 0.60, blue: 0.69),
+        TfLLineID.jubilee: Color(red: 0.42, green: 0.45, blue: 0.47),
+        TfLLineID.metropolitan: Color(red: 0.46, green: 0.06, blue: 0.34),
+        TfLLineID.northen: Color(red: 0.10, green: 0.10, blue: 0.10),
+        TfLLineID.overground: Color(red: 0.91, green: 0.42, blue: 0.06),
+        TfLLineID.piccadilly: Color(red: 0.10, green: 0.2, blue: 0.8),
+        TfLLineID.tfLRail: Color(red: 0.00, green: 0.10, blue: 0.66),
+        TfLLineID.victoria: Color(red: 0.02, green: 0.63, blue: 0.89),
+        TfLLineID.waterlooCity: Color(red: 0.47, green: 0.82, blue: 0.74)
     ]
-    
-    subscript (key:TfLLineID) -> Color {
+
+    subscript (key: TfLLineID) -> Color {
+      // swiftlint:disable implicit_getter
       get {
         if let newValue = color[key] {
           return newValue
         } else {
-          return Color(red:0.00, green:0.00, blue:0.00)
+          return Color(red: 0.00, green: 0.00, blue: 0.00)
         }
       }
     }
 }
 
 struct TfLLine {
-    let id: TfLLineID
+    let lineId: TfLLineID
     let color: Color
-    
-    init(id: TfLLineID) {
-        self.id = id
-        self.color = TfLLineColor()[id]
+
+    init(lineId: TfLLineID) {
+        self.lineId = lineId
+        self.color = TfLLineColor()[lineId]
     }
 }

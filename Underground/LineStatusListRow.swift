@@ -6,19 +6,21 @@
 //  Copyright © 2019 Daniel Eden. All rights reserved.
 //
 
+// swiftlint:disable multiple_closures_with_trailing_closure
+
 import SwiftUI
 
 struct LineStatusListRow: View {
   var line: APIResponse
   var isFavourite: Bool
   @State var isPresented = false
-  
+
   var body: some View {
     Button(action: {
       self.isPresented.toggle()
     }) {
       VStack(spacing: 0) {
-        Rectangle().fill(TfLLine(id: line.id).color)
+        Rectangle().fill(TfLLine(lineId: line.id).color)
           .frame(height: 8)
         VStack(alignment: .leading, spacing: 2) {
           HStack {

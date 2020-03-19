@@ -6,12 +6,12 @@
 //  Copyright © 2019 Daniel Eden. All rights reserved.
 //
 
-import SwiftUI  
+import SwiftUI
 
 struct ContentView: View {
   @EnvironmentObject var data: UndergroundDataFetcher
   @EnvironmentObject var device: DeviceModel
-  
+
   var body: some View {
     TabView {
       NavigationView {
@@ -23,7 +23,7 @@ struct ContentView: View {
         Image(systemName: "tram.fill")
         Text("Status")
       }
-      
+
       AboutView()
         .tabItem {
           Image(systemName: "questionmark.circle.fill")

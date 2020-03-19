@@ -12,12 +12,12 @@ let favourites = SyncModel()
 
 struct LineStatusList: View {
   @ObservedObject var data: UndergroundDataFetcher
-  
+
   var body: some View {
     ScrollView {
       VStack {
         UpdatingLiveIndicator(status: data.dataState, lastUpdated: data.lastUpdated)
-        
+
         ForEach(data.lines) { line in
           #if os(watchOS)
           LineStatusListRow(line: line, isFavourite: favourites.get().contains(line.id.rawValue))
