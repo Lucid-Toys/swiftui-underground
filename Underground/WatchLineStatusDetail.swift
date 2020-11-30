@@ -24,7 +24,7 @@ struct WatchLineStatusDetail: View {
   }
 
   var body: some View {
-    ContainerView {
+    ScrollView {
       VStack(alignment: .leading) {
         HStack {
           Text(self.line.name)

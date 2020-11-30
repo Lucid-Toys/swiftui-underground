@@ -65,8 +65,6 @@ struct UpdatingLiveIndicator: View {
       }
       Spacer()
     }
-    .padding(.horizontal, 12)
-    .padding(.vertical, 8)
     .background(status != .offline ? .clear : Color("Yellow"))
     .foregroundColor(status != .offline ? .secondary : .black)
     .font(.caption)

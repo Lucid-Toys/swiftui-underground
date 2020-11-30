@@ -10,12 +10,6 @@
 
 import SwiftUI
 
-#if os(watchOS)
-  typealias ContainerView = ScrollView
-#else
-  typealias ContainerView = Group
-#endif
-
 func shouldShowPoorServiceView(_ lineStatuses: [TfLDisruption]) -> Bool {
   if lineStatuses.count > 1 || (lineStatuses.count >= 1 && lineStatuses[0].statusSeverity != 10) {
     return true
@@ -38,7 +32,7 @@ struct ListStatusDetail: View {
   }
 
   var body: some View {
-    ContainerView {
+    ScrollView {
       HStack {
         Text(self.line.name)
           .font(.largeTitle)

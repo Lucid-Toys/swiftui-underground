@@ -19,9 +19,9 @@ struct LineStatusListRow: View {
     Button(action: {
       self.isPresented.toggle()
     }) {
-      VStack(spacing: 0) {
+      HStack(spacing: 0) {
         Rectangle().fill(TfLLine(lineId: line.id).color)
-          .frame(height: 8)
+          .frame(width: 8)
         VStack(alignment: .leading, spacing: 2) {
           HStack {
             Text(line.name)
@@ -30,7 +30,7 @@ struct LineStatusListRow: View {
             Spacer()
             if isFavourite {
               Image(systemName: "star.fill")
-                .foregroundColor(.secondary)
+                .foregroundColor(Color("Yellow"))
                 .font(.caption)
             }
           }
@@ -42,7 +42,6 @@ struct LineStatusListRow: View {
     .buttonStyle(PlainButtonStyle())
     .background(Color("SecondaryBackground"))
     .foregroundColor(.primary)
-    .cornerRadius(12)
     .sheet(isPresented: $isPresented) {
       #if !os(watchOS)
       ListStatusDetail(line: self.line, isFavourite: self.isFavourite)

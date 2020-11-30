@@ -14,23 +14,19 @@ struct LineStatusList: View {
   @ObservedObject var data: UndergroundDataFetcher
 
   var body: some View {
-    ScrollView {
-      VStack {
+    
+      List {
+        #if !os(watchOS)
         UpdatingLiveIndicator(status: data.dataState, lastUpdated: data.lastUpdated)
+        #endif
 
         ForEach(data.lines) { line in
-          #if os(watchOS)
           LineStatusListRow(line: line, isFavourite: favourites.get().contains(line.id.rawValue))
-          #else
-          LineStatusListRow(line: line, isFavourite: favourites.get().contains(line.id.rawValue))
-            .shadow(radius: 6)
-            .padding(.horizontal, 8)
-          #endif
+            .listRowInsets(EdgeInsets())
+            .animation(nil)
         }
       }
-      .padding(.bottom, 8)
-      .background(Color("PrimaryBackground"))
+      .animation(.default)
       .navigationBarTitle("Underground Status")
     }
-  }
 }

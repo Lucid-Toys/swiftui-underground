@@ -31,7 +31,6 @@ struct ContentView: View {
       }
     }
     .background(Color("SecondaryBackground"))
-    .edgesIgnoringSafeArea(.top)
   }
 }
 
