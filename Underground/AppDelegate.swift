@@ -10,7 +10,7 @@ import UIKit
 import BackgroundTasks
 import os.log
 
-let fetcher = UndergroundDataFetcher()
+let fetcher = TransitLineViewModel()
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -42,7 +42,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func performBackgroundDataRefresh(_ task: BGAppRefreshTask) {
         task.expirationHandler = {
             task.setTaskCompleted(success: false)
-            fetcher.urlSession.invalidateAndCancel()
         }
 
         fetcher.load({(success) -> Void in

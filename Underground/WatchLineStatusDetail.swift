@@ -12,7 +12,7 @@ import SwiftUI
 
 struct WatchLineStatusDetail: View {
   @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
-  var line: APIResponse
+  var line: TransitLine
   @State var isFavourite: Bool
 
   // swiftlint:disable identifier_name
@@ -34,7 +34,7 @@ struct WatchLineStatusDetail: View {
           Spacer()
         }
         .padding()
-        .background(TfLLine(lineId: self.line.id).color.opacity(0.5))
+        .background(line.color.opacity(0.5))
 
         if shouldShowPoorServiceView(self.line.lineStatuses) {
           ForEach(self.line.lineStatuses) { status in

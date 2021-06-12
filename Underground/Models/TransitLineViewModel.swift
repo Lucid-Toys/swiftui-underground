@@ -8,6 +8,7 @@
 
 import Foundation
 import Network
+import SwiftUI
 
 typealias CompletionHandler = (_ success: Bool) -> Void
 
@@ -40,10 +41,60 @@ struct TfLDisruption: Decodable, Identifiable {
   }
 }
 
-struct APIResponse: Decodable, Identifiable {
-  public var id: TfLLineID
-  public var name: String
-  public var lineStatuses: [TfLDisruption]
+enum TfLLineID: String, Decodable {
+  case bakerloo = "bakerloo"
+  case central = "central"
+  case circle = "circle"
+  case district = "district"
+  case DLR = "dlr"
+  case hammersmithCity = "hammersmith-city"
+  case jubilee = "jubilee"
+  case metropolitan = "metropolitan"
+  case northen = "northern"
+  case overground = "london-overground"
+  case piccadilly = "piccadilly"
+  case tfLRail = "tfl-rail"
+  case victoria = "victoria"
+  case waterlooCity = "waterloo-city"
+}
+
+struct TfLLineColor {
+  static var color: [TfLLineID: Color] = [
+    TfLLineID.bakerloo: Color(red: 0.54, green: 0.31, blue: 0.14),
+    TfLLineID.central: Color(red: 0.87, green: 0.15, blue: 0.12),
+    TfLLineID.circle: Color(red: 0.89, green: 0.71, blue: 0.00),
+    TfLLineID.district: Color(red: 0.00, green: 0.45, blue: 0.16),
+    TfLLineID.DLR: Color(red: 0.00, green: 0.69, blue: 0.68),
+    TfLLineID.hammersmithCity: Color(red: 0.84, green: 0.60, blue: 0.69),
+    TfLLineID.jubilee: Color(red: 0.42, green: 0.45, blue: 0.47),
+    TfLLineID.metropolitan: Color(red: 0.46, green: 0.06, blue: 0.34),
+    TfLLineID.northen: Color(red: 0.10, green: 0.10, blue: 0.10),
+    TfLLineID.overground: Color(red: 0.91, green: 0.42, blue: 0.06),
+    TfLLineID.piccadilly: Color(red: 0.10, green: 0.2, blue: 0.8),
+    TfLLineID.tfLRail: Color(red: 0.00, green: 0.10, blue: 0.66),
+    TfLLineID.victoria: Color(red: 0.02, green: 0.63, blue: 0.89),
+    TfLLineID.waterlooCity: Color(red: 0.47, green: 0.82, blue: 0.74)
+  ]
+  
+  static subscript (key: TfLLineID) -> Color {
+    // swiftlint:disable implicit_getter
+    get {
+      if let newValue = color[key] {
+        return newValue
+      } else {
+        return Color(red: 0.00, green: 0.00, blue: 0.00)
+      }
+    }
+  }
+}
+
+struct TransitLine: Decodable, Identifiable {
+  var id: TfLLineID
+  var name: String
+  var lineStatuses: [TfLDisruption]
+  var color: Color {
+    TfLLineColor[id]
+  }
 
   enum CodingKeys: String, CodingKey {
     case id
@@ -52,21 +103,53 @@ struct APIResponse: Decodable, Identifiable {
   }
 }
 
-public class UndergroundDataFetcher: ObservableObject {
-  let config = URLSessionConfiguration.default
-  let urlSession: URLSession
-  let favouritesModel = SyncModel()
-  @Published var lines = [APIResponse]()
+typealias TransitLineIDs = [String]
+
+extension TransitLineIDs: RawRepresentable {
+  public init?(rawValue: String) {
+    guard let data = rawValue.data(using: .utf8),
+          let result = try? JSONDecoder().decode(TransitLineIDs.self, from: data) else {
+      return nil
+    }
+    
+    self = result
+  }
+  
+  public var rawValue: String {
+    guard let data = try? JSONEncoder().encode(self),
+          let result = String(data: data, encoding: .utf8) else {
+      return "[]"
+    }
+    
+    return result
+  }
+}
+
+public class TransitLineViewModel: ObservableObject {
+  static var shared = TransitLineViewModel()
+  
+  @AppStorage("favouriteLineIDs") var favouriteLineIDs: TransitLineIDs = favourites.get() {
+    didSet {
+      self.objectWillChange.send()
+    }
+  }
+  
+  @Published var lines = [TransitLine]()
   @Published var dataState: DataState = .stale
   @Published var lastUpdated: Date = Date()
+  
+  var favouriteLines: [TransitLine] {
+    lines.filter { favouriteLineIDs.contains($0.id.rawValue) }
+  }
+  
+  var nonFavouriteLines: [TransitLine] {
+    lines.filter { !favouriteLineIDs.contains($0.id.rawValue) }
+  }
+  
   private var timer: Timer?
   let networkMonitor = NWPathMonitor()
 
   init() {
-    // Only try to fetch data if there's a network connection
-    config.waitsForConnectivity = true
-    urlSession = URLSession(configuration: config)
-
     // Schedule the fetch to happen every 5 seconds
     timer = Timer.scheduledTimer(withTimeInterval: 3.5, repeats: true) { _ in
       self.load()
@@ -108,7 +191,7 @@ public class UndergroundDataFetcher: ObservableObject {
 
     let url = URL(string: "https://underground.lucid.toys/api/data")!
 
-    urlSession.dataTask(with: url) {(data, _, error) in
+    URLSession.shared.dataTask(with: url) {(data, _, error) in
       do {
         DispatchQueue.main.sync {
           // If 6 seconds or more have passed since the last successful update, let the user know
@@ -122,31 +205,17 @@ public class UndergroundDataFetcher: ObservableObject {
           }
         }
 
-        // Fetch the array of favourited lines
-        let favourites = self.favouritesModel.get()
-
-        #if DEBUG
-        print("State is \(self.dataState)")
-        print("Fetching underground status data...")
-        print("Favourites: \(favourites)")
-        #endif
-
         if let response = data {
-          let decodedResponse = try JSONDecoder().decode([APIResponse].self, from: response)
+          let decodedResponse = try JSONDecoder().decode([TransitLine].self, from: response)
           DispatchQueue.main.sync {
             // Update/set the lines array
-            let lines = decodedResponse.sorted {
-              return favourites.firstIndex(of: $0.id.rawValue) ?? Int.max < favourites.firstIndex(of: $1.id.rawValue) ?? Int.max
-            }
-            self.lines = lines
+            self.lines = decodedResponse
 
             // Let the user know everything has loaded
             self.dataState = .loaded
 
             // Update the timestamp
             self.lastUpdated = Date()
-            print("State is \(self.dataState)")
-            print("Updated at \(self.lastUpdated)\n")
           }
         } else {
           print("No data received from Lucid Underground API.")
@@ -166,5 +235,17 @@ public class UndergroundDataFetcher: ObservableObject {
         }
       }
     }.resume()
+  }
+  
+  func toggleFavourite(lineId: String) {
+    if let index = favouriteLineIDs.firstIndex(of: lineId) {
+      favouriteLineIDs.remove(at: index)
+    } else {
+      favouriteLineIDs.append(lineId)
+    }
+  }
+  
+  func isFavourite(lineId: String) -> Bool {
+    return favouriteLineIDs.contains(lineId)
   }
 }

@@ -21,53 +21,37 @@ struct UpdatingLiveIndicator: View {
     self.status = status
     self.lastUpdated = lastUpdated
   }
+  
+  var iconName: String {
+    switch status {
+    case .loading:
+      return "arrow.2.circlepath"
+    case .offline:
+      return "wifi.slash"
+    case .spotty:
+      return "wifi.exclamationmark"
+    default:
+      return "wifi"
+    }
+  }
+  
+  var statusString: String {
+    switch status {
+    case .loading:
+      return "Fetching latest status..."
+    case .spotty:
+      return "Still trying..."
+    case .offline:
+      return "Currently offline"
+    default:
+      return "Updating live"
+    }
+  }
 
   var body: some View {
-    HStack {
-      if status == .offline {
-        HStack(alignment: .top) {
-          Image(systemName: "wifi.slash")
-          VStack(alignment: .leading) {
-            Text("Currently offline")
-              .fontWeight(.bold)
-            #if !os(watchOS)
-            Text("Last updated at \(formatter.string(from: self.lastUpdated))")
-            #endif
-          }
-        }
-      } else if status == .loading {
-        HStack {
-          Image(systemName: "arrow.2.circlepath")
-            .rotationEffect(Angle(degrees: rotationAmount))
-            .animation(Animation.linear(duration: 2).repeatForever(autoreverses: false))
-            .onAppear {
-              self.rotationAmount = 0
-          }
-          Text("Fetching status...")
-        }
-      } else if status == .spotty {
-        HStack(alignment: .top) {
-          Image(systemName: "wifi.exclamationmark")
-            .padding(.top, 2)
-          VStack(alignment: .leading) {
-            Text("Still trying...")
-              .fontWeight(.bold)
-            #if !os(watchOS)
-            Text("Last updated at \(formatter.string(from: self.lastUpdated))")
-            #endif
-          }
-        }
-      } else {
-        HStack {
-          Image(systemName: "wifi")
-          Text("Updating Live")
-        }
-      }
-      Spacer()
-    }
-    .background(status != .offline ? .clear : Color("Yellow"))
-    .foregroundColor(status != .offline ? .secondary : .black)
-    .font(.caption)
+    Label(statusString, systemImage: iconName)
+      .font(.caption)
+      .foregroundColor(.secondary)
   }
 }
 
