@@ -19,8 +19,7 @@ func shouldShowPoorServiceView(_ lineStatuses: [TfLDisruption]) -> Bool {
 }
 
 struct TransitLineDetailView: View {
-  @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
-  @EnvironmentObject var lineViewModel: TransitLineViewModel
+  @ObservedObject var lineViewModel: TransitLineViewModel = .shared
   
   var line: TransitLine
   
@@ -53,7 +52,8 @@ struct TransitLineDetailView: View {
       }) {
         Label(isFavourite ? "Unfavourite" : "Favourite", systemImage: isFavourite ? "star.fill" : "star")
       }
-    }.navigationTitle(line.name)
+    }
+    .navigationTitle(line.name)
   }
 }
 

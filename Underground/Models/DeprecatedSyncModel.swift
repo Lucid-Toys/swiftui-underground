@@ -8,7 +8,7 @@
 
 import Foundation
 
-class SyncModel {
+class DeprecatedSyncModel {
   let key = "syncUndergroundFavourites"
 
   init() {

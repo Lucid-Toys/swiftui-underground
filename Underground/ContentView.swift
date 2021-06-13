@@ -13,6 +13,7 @@ struct ContentView: View {
     NavigationView {
       TransitLineStatusList()
         .navigationBarTitle("Underground Status")
+        .environmentObject(TransitLineViewModel.shared)
     }
   }
 }

@@ -23,9 +23,9 @@ enum TfLMode: String {
   case tfLRail = "tflrail"
 }
 
-struct TfLDisruption: Decodable, Identifiable {
+struct TfLDisruption: Decodable, Identifiable, Equatable {
   // swiftlint:disable identifier_name
-  public var id = UUID()
+  public var id: String { "\(lineId ?? "status")-\(created)" }
   public var lineId: String?
   public var statusSeverity: Int
   public var statusSeverityDescription: String
@@ -88,7 +88,11 @@ struct TfLLineColor {
   }
 }
 
-struct TransitLine: Decodable, Identifiable {
+struct TransitLine: Decodable, Identifiable, Equatable {
+  static func == (lhs: TransitLine, rhs: TransitLine) -> Bool {
+    lhs.id == rhs.id && lhs.lineStatuses.elementsEqual(rhs.lineStatuses)
+  }
+  
   var id: TfLLineID
   var name: String
   var lineStatuses: [TfLDisruption]
@@ -209,7 +213,9 @@ public class TransitLineViewModel: ObservableObject {
           let decodedResponse = try JSONDecoder().decode([TransitLine].self, from: response)
           DispatchQueue.main.sync {
             // Update/set the lines array
-            self.lines = decodedResponse
+            if !self.lines.elementsEqual(decodedResponse) {
+              withAnimation { self.lines = decodedResponse }
+            }
 
             // Let the user know everything has loaded
             self.dataState = .loaded
@@ -238,10 +244,12 @@ public class TransitLineViewModel: ObservableObject {
   }
   
   func toggleFavourite(lineId: String) {
-    if let index = favouriteLineIDs.firstIndex(of: lineId) {
-      favouriteLineIDs.remove(at: index)
-    } else {
-      favouriteLineIDs.append(lineId)
+    withAnimation {
+      if let index = favouriteLineIDs.firstIndex(of: lineId) {
+        favouriteLineIDs.remove(at: index)
+      } else {
+        favouriteLineIDs.append(lineId)
+      }
     }
   }
   
