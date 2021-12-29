@@ -11,11 +11,11 @@ import SwiftUI
 struct UpdatingLiveIndicator: View {
   @State var opacity = 1.0
   @State var rotationAmount = -360.0
-  var status: DataState
+  var status: LoadingState<[TransitLine]>
   var lastUpdated: Date
   let formatter = DateFormatter()
 
-  init(status: DataState, lastUpdated: Date) {
+  init(status: LoadingState<[TransitLine]>, lastUpdated: Date) {
     formatter.dateStyle = .short
     formatter.timeStyle = .short
     self.status = status
@@ -28,8 +28,6 @@ struct UpdatingLiveIndicator: View {
       return "arrow.2.circlepath"
     case .offline:
       return "wifi.slash"
-    case .spotty:
-      return "wifi.exclamationmark"
     default:
       return "wifi"
     }
@@ -39,8 +37,6 @@ struct UpdatingLiveIndicator: View {
     switch status {
     case .loading:
       return "Fetching latest status..."
-    case .spotty:
-      return "Still trying..."
     case .offline:
       return "Currently offline"
     default:
@@ -60,8 +56,6 @@ struct UpdatingLiveIndicator_Previews: PreviewProvider {
   static var previews: some View {
     VStack(spacing: 2) {
       UpdatingLiveIndicator(status: .loading, lastUpdated: Date())
-      UpdatingLiveIndicator(status: .loaded, lastUpdated: Date())
-      UpdatingLiveIndicator(status: .spotty, lastUpdated: Date())
       UpdatingLiveIndicator(status: .offline, lastUpdated: Date())
     }
     .previewDevice(.none)

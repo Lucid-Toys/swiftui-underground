@@ -9,11 +9,19 @@
 import SwiftUI
 
 struct ContentView: View {
+  @StateObject var viewModel = TransitLineViewModel()
+  
   var body: some View {
     NavigationView {
       TransitLineStatusList()
         .navigationBarTitle("Underground Status")
-        .environmentObject(TransitLineViewModel.shared)
+        .environmentObject(viewModel)
+        .task {
+          await viewModel.load()
+        }
+        .refreshable {
+          await viewModel.load()
+        }
     }
   }
 }

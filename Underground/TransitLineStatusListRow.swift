@@ -18,14 +18,14 @@ struct TransitLineStatusListRow: View {
   }
 
   var body: some View {
-    NavigationLink(destination: TransitLineDetailView(line: line)) {
+    NavigationLink(destination: TransitLineDetailView(line: line).environmentObject(lineViewModel)) {
       HStack {
         Label(
           title: { Text(line.name) },
           icon: { Image(systemName: isFavourite ? "star.square.fill" : "square.fill").foregroundColor(line.color) }
         )
           .font(.headline)
-          .lineLimit(1)
+          .lineLimit(2)
         Spacer()
         StatusSummary(lineStatuses: line.lineStatuses)
       }
@@ -80,7 +80,7 @@ struct StatusSummary: View {
 struct LineStatusList_Previews: PreviewProvider {
   static var previews: some View {
     TransitLineStatusList()
-      .environmentObject(TransitLineViewModel.shared)
+      .environmentObject(TransitLineViewModel())
   }
 }
 

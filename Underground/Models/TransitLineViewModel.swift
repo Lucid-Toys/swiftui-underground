@@ -23,25 +23,16 @@ enum TfLMode: String {
   case tfLRail = "tflrail"
 }
 
-struct TfLDisruption: Decodable, Identifiable, Equatable {
-  // swiftlint:disable identifier_name
+struct TfLDisruption: Codable, Identifiable, Equatable {
   public var id: String { "\(lineId ?? "status")-\(created)" }
   public var lineId: String?
   public var statusSeverity: Int
   public var statusSeverityDescription: String
   public var reason: String?
   public var created: String
-
-  enum CodingKeys: String, CodingKey {
-    case lineId
-    case statusSeverity
-    case statusSeverityDescription
-    case reason
-    case created
-  }
 }
 
-enum TfLLineID: String, Decodable {
+enum TfLLineID: String, Codable {
   case bakerloo = "bakerloo"
   case central = "central"
   case circle = "circle"
@@ -60,24 +51,23 @@ enum TfLLineID: String, Decodable {
 
 struct TfLLineColor {
   static var color: [TfLLineID: Color] = [
-    TfLLineID.bakerloo: Color(red: 0.54, green: 0.31, blue: 0.14),
-    TfLLineID.central: Color(red: 0.87, green: 0.15, blue: 0.12),
-    TfLLineID.circle: Color(red: 0.89, green: 0.71, blue: 0.00),
-    TfLLineID.district: Color(red: 0.00, green: 0.45, blue: 0.16),
-    TfLLineID.DLR: Color(red: 0.00, green: 0.69, blue: 0.68),
-    TfLLineID.hammersmithCity: Color(red: 0.84, green: 0.60, blue: 0.69),
-    TfLLineID.jubilee: Color(red: 0.42, green: 0.45, blue: 0.47),
-    TfLLineID.metropolitan: Color(red: 0.46, green: 0.06, blue: 0.34),
-    TfLLineID.northen: Color(red: 0.10, green: 0.10, blue: 0.10),
-    TfLLineID.overground: Color(red: 0.91, green: 0.42, blue: 0.06),
-    TfLLineID.piccadilly: Color(red: 0.10, green: 0.2, blue: 0.8),
-    TfLLineID.tfLRail: Color(red: 0.00, green: 0.10, blue: 0.66),
-    TfLLineID.victoria: Color(red: 0.02, green: 0.63, blue: 0.89),
-    TfLLineID.waterlooCity: Color(red: 0.47, green: 0.82, blue: 0.74)
+    .bakerloo: Color(red: 0.54, green: 0.31, blue: 0.14),
+    .central: Color(red: 0.87, green: 0.15, blue: 0.12),
+    .circle: Color(red: 0.89, green: 0.71, blue: 0.00),
+    .district: Color(red: 0.00, green: 0.45, blue: 0.16),
+    .DLR: Color(red: 0.00, green: 0.69, blue: 0.68),
+    .hammersmithCity: Color(red: 0.84, green: 0.60, blue: 0.69),
+    .jubilee: Color(red: 0.42, green: 0.45, blue: 0.47),
+    .metropolitan: Color(red: 0.46, green: 0.06, blue: 0.34),
+    .northen: Color(red: 0.10, green: 0.10, blue: 0.10),
+    .overground: Color(red: 0.91, green: 0.42, blue: 0.06),
+    .piccadilly: Color(red: 0.10, green: 0.2, blue: 0.8),
+    .tfLRail: Color(red: 0.00, green: 0.10, blue: 0.66),
+    .victoria: Color(red: 0.02, green: 0.63, blue: 0.89),
+    .waterlooCity: Color(red: 0.47, green: 0.82, blue: 0.74)
   ]
   
   static subscript (key: TfLLineID) -> Color {
-    // swiftlint:disable implicit_getter
     get {
       if let newValue = color[key] {
         return newValue
@@ -88,7 +78,7 @@ struct TfLLineColor {
   }
 }
 
-struct TransitLine: Decodable, Identifiable, Equatable {
+struct TransitLine: Codable, Identifiable, Equatable {
   static func == (lhs: TransitLine, rhs: TransitLine) -> Bool {
     lhs.id == rhs.id && lhs.lineStatuses.elementsEqual(rhs.lineStatuses)
   }
@@ -98,12 +88,6 @@ struct TransitLine: Decodable, Identifiable, Equatable {
   var lineStatuses: [TfLDisruption]
   var color: Color {
     TfLLineColor[id]
-  }
-
-  enum CodingKeys: String, CodingKey {
-    case id
-    case name
-    case lineStatuses
   }
 }
 
@@ -129,8 +113,14 @@ extension TransitLineIDs: RawRepresentable {
   }
 }
 
+enum LoadingState<Resource: Codable> {
+  case idle, loading, offline
+  case loaded(data: Resource)
+}
+
+@MainActor
 public class TransitLineViewModel: ObservableObject {
-  static var shared = TransitLineViewModel()
+  static let API_URL = URL(string: "https://underground.lucid.toys/api/data")!
   
   @AppStorage("favouriteLineIDs") var favouriteLineIDs: TransitLineIDs = favourites.get() {
     didSet {
@@ -138,9 +128,16 @@ public class TransitLineViewModel: ObservableObject {
     }
   }
   
-  @Published var lines = [TransitLine]()
-  @Published var dataState: DataState = .stale
+  @Published var state: LoadingState<[TransitLine]> = .idle
   @Published var lastUpdated: Date = Date()
+  
+  var lines: [TransitLine] {
+    if case .loaded(let lines) = state {
+      return lines
+    } else {
+      return []
+    }
+  }
   
   var favouriteLines: [TransitLine] {
     lines.filter { favouriteLineIDs.contains($0.id.rawValue) }
@@ -149,103 +146,30 @@ public class TransitLineViewModel: ObservableObject {
   var nonFavouriteLines: [TransitLine] {
     lines.filter { !favouriteLineIDs.contains($0.id.rawValue) }
   }
-  
-  private var timer: Timer?
-  let networkMonitor = NWPathMonitor()
-
-  init() {
-    // Schedule the fetch to happen every 5 seconds
-    timer = Timer.scheduledTimer(withTimeInterval: 3.5, repeats: true) { _ in
-      self.load()
-    }
-
-    // Kick off an initial load
-    load()
-
-    // Let's handle network connection availability
-    networkMonitor.pathUpdateHandler = { path in
-      if path.status == .satisfied {
-        // If the network is available, mark data as stale.
-        // This will soon be changed by the load() function.
-        DispatchQueue.main.async {
-          self.dataState = .stale
-          print("Network connection detected")
-        }
-      } else {
-        // Otherwise, let the user know that no updates are happening since there's no internet connection.
-        DispatchQueue.main.async {
-          self.dataState = .offline
-          print("No network connection")
-        }
-      }
-    }
-
-    // Set up the network monitor
-    let queue = DispatchQueue(label: "Monitor")
-    networkMonitor.start(queue: queue)
-  }
 
   // MARK: Loading function
-  func load(_ completionHandler: CompletionHandler? = nil) {
+  func load() async {
     // Start the loading process.
     // If the lines array is empty, let's initialise things with a loading status.
     if self.lines.isEmpty {
-      self.dataState = .loading
+      self.state = .loading
     }
-
-    let url = URL(string: "https://underground.lucid.toys/api/data")!
     
     let config = URLSessionConfiguration.default
     config.requestCachePolicy = .reloadRevalidatingCacheData
     
     let session = URLSession(configuration: config)
-
-    session.dataTask(with: url) {(data, _, error) in
-      do {
-        DispatchQueue.main.sync {
-          // If 6 seconds or more have passed since the last successful update, let the user know
-          let dateComponents = Calendar.current.dateComponents([.second], from: self.lastUpdated, to: Date())
-          if dateComponents.second! >= 6 {
-            self.dataState = .loading
-          }
-
-          if dateComponents.second! >= 12 {
-            self.dataState = .spotty
-          }
-        }
-
-        if let response = data {
-          let decodedResponse = try JSONDecoder().decode([TransitLine].self, from: response)
-          DispatchQueue.main.sync {
-            // Update/set the lines array
-            if !self.lines.elementsEqual(decodedResponse) {
-              withAnimation { self.lines = decodedResponse }
-            }
-
-            // Let the user know everything has loaded
-            self.dataState = .loaded
-
-            // Update the timestamp
-            self.lastUpdated = Date()
-          }
-        } else {
-          print("No data received from Lucid Underground API.")
-        }
-
-        // load() has an optional completion block. We'll run that here with `success: true`
-        if completionHandler != nil {
-          completionHandler!(true)
-        }
-      } catch {
-        print(error)
-        print("Error fetching line statuses")
-
-        // Run the completion block with `success: false`
-        if completionHandler != nil {
-          completionHandler!(false)
-        }
-      }
-    }.resume()
+    
+    do {
+      let (data, _) = try await session.data(from: Self.API_URL)
+      
+      let newData = try JSONDecoder().decode([TransitLine].self, from: data)
+      
+      state = .loaded(data: newData)
+    } catch {
+      print(error.localizedDescription)
+      self.state = .idle
+    }
   }
   
   func toggleFavourite(lineId: String) {

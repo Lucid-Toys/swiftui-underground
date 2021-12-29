@@ -33,7 +33,7 @@ struct TransitLineStatusList: View {
     .toolbar {
       #if !os(watchOS)
       ToolbarItem(placement: .status) {
-        UpdatingLiveIndicator(status: linesViewModel.dataState, lastUpdated: linesViewModel.lastUpdated)
+        UpdatingLiveIndicator(status: linesViewModel.state, lastUpdated: linesViewModel.lastUpdated)
       }
       #endif
     }

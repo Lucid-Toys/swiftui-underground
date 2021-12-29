@@ -19,7 +19,7 @@ func shouldShowPoorServiceView(_ lineStatuses: [TfLDisruption]) -> Bool {
 }
 
 struct TransitLineDetailView: View {
-  @ObservedObject var lineViewModel: TransitLineViewModel = .shared
+  @EnvironmentObject var lineViewModel: TransitLineViewModel
   
   var line: TransitLine
   
