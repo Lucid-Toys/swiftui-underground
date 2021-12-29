@@ -53,7 +53,7 @@ struct TransitLineDetailView: View {
         Label(isFavourite ? "Unfavourite" : "Favourite", systemImage: isFavourite ? "star.fill" : "star")
       }
     }
-    .accentColor(line.color)
+    .symbolRenderingMode(.multicolor)
     .navigationTitle(line.name)
   }
 }
@@ -79,7 +79,7 @@ struct PoorServiceView: View {
   var status: TfLDisruption
   var body: some View {
     VStack(alignment: .leading, spacing: 8) {
-      Label(status.statusSeverityDescription, systemImage: "exclamationmark.circle")
+      Label(status.statusSeverityDescription, systemImage: "exclamationmark.octagon.fill")
         .font(.headline)
       if let reason = status.reason {
         Text(reason)

@@ -39,12 +39,12 @@ struct TransitLineStatusList: View {
       }
     }
     .navigationBarTitle("Underground Status")
+    #if targetEnvironment(macCatalyst)
     .toolbar {
-      #if !os(watchOS)
-      ToolbarItem(placement: .status) {
-        UpdatingLiveIndicator(status: linesViewModel.state, lastUpdated: linesViewModel.lastUpdated)
+      Button(action: { Task { await linesViewModel.load() } }) {
+        Label("Refresh", systemImage: "arrow.triangle.2.circlepath")
       }
-      #endif
     }
+    #endif
   }
 }

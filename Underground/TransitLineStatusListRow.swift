@@ -14,65 +14,46 @@ struct TransitLineStatusListRow: View {
   var line: TransitLine
   
   var isFavourite: Bool {
-    lineViewModel.favouriteLineIDs.contains(line.id.rawValue)
+    lineViewModel.isFavourite(lineId: line.id)
   }
 
   var body: some View {
     NavigationLink(destination: TransitLineDetailView(line: line).environmentObject(lineViewModel)) {
       HStack {
-        Label(
-          title: { Text(line.name) },
-          icon: { Image(systemName: isFavourite ? "star.square.fill" : "square.fill").foregroundColor(line.color) }
-        )
+        Group {
+          if isFavourite {
+            Label(line.name, systemImage: "star.fill")
+          } else {
+            Text(line.name)
+          }
+        }
           .font(.headline)
           .lineLimit(2)
         Spacer()
-        StatusSummary(lineStatuses: line.lineStatuses)
-      }
+        StatusSummary(line: line)
+      }.foregroundStyle(.white)
     }
+    .listRowBackground(line.color)
   }
 }
 
 struct StatusSummary: View {
-  enum Severity {
-    case high, medium, low
+  var line: TransitLine
+  
+  var status: TfLDisruption? {
+    line.mostSevereStatus
   }
   
-  var lineStatuses: [TfLDisruption]
-  
-  var mostSevereStatus: TfLDisruption? {
-    lineStatuses.reduce(TfLDisruption?.none) { currentMostSevere, currentDisruption in
-      guard let currentMostSevere = currentMostSevere else {
-        return currentDisruption
-      }
-      
-      return currentDisruption.statusSeverity < currentMostSevere.statusSeverity ? currentDisruption : currentMostSevere
-    }
+  var severity: TransitLine.DisruptionSeverity {
+    line.mostSevereDisruptionSeverity
   }
   
   var body: some View {
-    if let status = mostSevereStatus {
+    if let status = status {
       Label(status.statusSeverityDescription,
-            systemImage: (getSeverity(for: status) == .high || getSeverity(for: status) == .medium) ? "exclamationmark.triangle" : "checkmark" )
-        .foregroundColor(
-          status.statusSeverity < 6
-            ? Color("Red")
-            : status.statusSeverity < 10
-            ? Color("Yellow")
-            : .secondary
-        )
+            systemImage: (severity == .high || severity == .medium) ? "exclamationmark.triangle" : "checkmark" )
         .labelStyle(.iconOnly)
-    }
-  }
-  
-  func getSeverity(for status: TfLDisruption) -> Severity {
-    switch status.statusSeverity {
-    case let x where x < 6:
-      return .high
-    case let x where (x < 10 || x == 20):
-      return .medium
-    default:
-      return .low
+        .symbolVariant(severity == .high ? .fill : .none)
     }
   }
 }

@@ -66,6 +66,10 @@ struct TfLLineColor {
 }
 
 struct TransitLine: Codable, Identifiable, Equatable {
+  enum DisruptionSeverity {
+    case high, medium, low
+  }
+  
   static func == (lhs: TransitLine, rhs: TransitLine) -> Bool {
     lhs.id == rhs.id && lhs.lineStatuses.elementsEqual(rhs.lineStatuses)
   }
@@ -75,6 +79,33 @@ struct TransitLine: Codable, Identifiable, Equatable {
   var lineStatuses: [TfLDisruption]
   var color: Color {
     TfLLineColor[id]
+  }
+  
+  var mostSevereStatus: TfLDisruption? {
+    lineStatuses.reduce(TfLDisruption?.none) { currentMostSevere, currentDisruption in
+      guard let currentMostSevere = currentMostSevere else {
+        return currentDisruption
+      }
+      
+      return currentDisruption.statusSeverity < currentMostSevere.statusSeverity
+      ? currentDisruption
+      : currentMostSevere
+    }
+  }
+  
+  var mostSevereDisruptionSeverity: DisruptionSeverity {
+    guard let status = mostSevereStatus else {
+      return .low
+    }
+    
+    switch status.statusSeverity {
+    case let x where x < 6:
+      return .high
+    case let x where (x < 10 || x == 20):
+      return .medium
+    default:
+      return .low
+    }
   }
 }
 
@@ -179,7 +210,7 @@ public class TransitLineViewModel: ObservableObject {
     }
   }
   
-  func isFavourite(lineId: String) -> Bool {
-    return favouriteLineIDs.contains(lineId)
+  func isFavourite(lineId: TfLLineID) -> Bool {
+    return favouriteLineIDs.contains(lineId.rawValue)
   }
 }

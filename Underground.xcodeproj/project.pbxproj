@@ -13,7 +13,6 @@
 		711AB5E726761202004D0768 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 718A7A4323A8E8A8000CF24E /* ContentView.swift */; };
 		712E161023A94D1000B56242 /* TransitLineDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 712E160F23A94D1000B56242 /* TransitLineDetailView.swift */; };
 		712E161123A94D1000B56242 /* TransitLineDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 712E160F23A94D1000B56242 /* TransitLineDetailView.swift */; };
-		7158321523D648E5002F591D /* UpdatingLiveIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7158321423D648E5002F591D /* UpdatingLiveIndicator.swift */; };
 		718A7A4023A8E8A8000CF24E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 718A7A3F23A8E8A8000CF24E /* AppDelegate.swift */; };
 		718A7A4423A8E8A8000CF24E /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 718A7A4323A8E8A8000CF24E /* ContentView.swift */; };
 		718A7A4623A8E8A9000CF24E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 718A7A4523A8E8A9000CF24E /* Assets.xcassets */; };
@@ -81,7 +80,6 @@
 		710544D623AD541A001671E3 /* TransitLineStatusListRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransitLineStatusListRow.swift; sourceTree = "<group>"; };
 		710544E423AD6800001671E3 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
 		712E160F23A94D1000B56242 /* TransitLineDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransitLineDetailView.swift; sourceTree = "<group>"; };
-		7158321423D648E5002F591D /* UpdatingLiveIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdatingLiveIndicator.swift; sourceTree = "<group>"; };
 		718A7A3C23A8E8A8000CF24E /* Underground.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Underground.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		718A7A3F23A8E8A8000CF24E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		718A7A4323A8E8A8000CF24E /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -157,17 +155,16 @@
 			isa = PBXGroup;
 			children = (
 				71ADC6F823A90C990073F9AE /* Underground.entitlements */,
-				718A7A6F23A8E922000CF24E /* Models */,
+				718A7A4D23A8E8A9000CF24E /* Info.plist */,
 				718A7A3F23A8E8A8000CF24E /* AppDelegate.swift */,
 				718A7A4323A8E8A8000CF24E /* ContentView.swift */,
-				71ADC6FC23A90E1E0073F9AE /* TransitLineStatusList.swift */,
-				7158321423D648E5002F591D /* UpdatingLiveIndicator.swift */,
-				710544D623AD541A001671E3 /* TransitLineStatusListRow.swift */,
 				712E160F23A94D1000B56242 /* TransitLineDetailView.swift */,
-				718A7A4523A8E8A9000CF24E /* Assets.xcassets */,
-				718A7A4D23A8E8A9000CF24E /* Info.plist */,
-				718A7A4723A8E8A9000CF24E /* Preview Content */,
+				71ADC6FC23A90E1E0073F9AE /* TransitLineStatusList.swift */,
+				710544D623AD541A001671E3 /* TransitLineStatusListRow.swift */,
 				71F5F8F7277CBEB000D9443C /* UndergroundApp.swift */,
+				718A7A4523A8E8A9000CF24E /* Assets.xcassets */,
+				718A7A6F23A8E922000CF24E /* Models */,
+				718A7A4723A8E8A9000CF24E /* Preview Content */,
 			);
 			path = Underground;
 			sourceTree = "<group>";
@@ -356,7 +353,6 @@
 				71F5F8F8277CBEB000D9443C /* UndergroundApp.swift in Sources */,
 				718A7A7123A8E935000CF24E /* TransitLineViewModel.swift in Sources */,
 				712E161023A94D1000B56242 /* TransitLineDetailView.swift in Sources */,
-				7158321523D648E5002F591D /* UpdatingLiveIndicator.swift in Sources */,
 				718A7A4023A8E8A8000CF24E /* AppDelegate.swift in Sources */,
 				718A7A4423A8E8A8000CF24E /* ContentView.swift in Sources */,
 				71ADC6FD23A90E1E0073F9AE /* TransitLineStatusList.swift in Sources */,
@@ -619,7 +615,7 @@
 		71ADC6F423A90C540073F9AE /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_COMPLICATION_NAME = Complication;
+				ASSETCATALOG_COMPILER_COMPLICATION_NAME = "";
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -647,7 +643,7 @@
 		71ADC6F523A90C540073F9AE /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_COMPLICATION_NAME = Complication;
+				ASSETCATALOG_COMPILER_COMPLICATION_NAME = "";
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
