@@ -8,8 +8,6 @@
 
 import SwiftUI
 
-let favourites = DeprecatedSyncModel()
-
 struct TransitLineStatusList: View {
   @EnvironmentObject var linesViewModel: TransitLineViewModel
 
@@ -19,6 +17,11 @@ struct TransitLineStatusList: View {
         Section(header: Label("Favourited Lines", systemImage: "star")) {
           ForEach(linesViewModel.favouriteLines) { line in
             TransitLineStatusListRow(line: line)
+              .swipeActions(edge: .leading, allowsFullSwipe: true) {
+                Button(action: { linesViewModel.toggleFavourite(lineId: line.id) }) {
+                  Label("Unfavourite", systemImage: "star.slash")
+                }
+              }
           }
         }
       }
@@ -26,6 +29,12 @@ struct TransitLineStatusList: View {
       Section(header: Label("TfL Lines", systemImage: "tram")) {
         ForEach(linesViewModel.nonFavouriteLines) { line in
           TransitLineStatusListRow(line: line)
+            .swipeActions(edge: .leading, allowsFullSwipe: true) {
+              Button(action: { linesViewModel.toggleFavourite(lineId: line.id) }) {
+                Label("Favourite", systemImage: "star")
+              }
+              .tint(.yellow)
+            }
         }
       }
     }

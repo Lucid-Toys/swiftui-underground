@@ -48,7 +48,7 @@ struct TransitLineDetailView: View {
       }
       
       Button(action: {
-        lineViewModel.toggleFavourite(lineId: line.id.rawValue)
+        lineViewModel.toggleFavourite(lineId: line.id)
       }) {
         Label(isFavourite ? "Unfavourite" : "Favourite", systemImage: isFavourite ? "star.fill" : "star")
       }

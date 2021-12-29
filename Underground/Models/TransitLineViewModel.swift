@@ -10,19 +10,6 @@ import Foundation
 import Network
 import SwiftUI
 
-typealias CompletionHandler = (_ success: Bool) -> Void
-
-enum DataState {
-  case loading, loaded, offline, stale, spotty
-}
-
-enum TfLMode: String {
-  case tube = "tube"
-  case DLR = "dlr"
-  case overground = "overground"
-  case tfLRail = "tflrail"
-}
-
 struct TfLDisruption: Codable, Identifiable, Equatable {
   public var id: String { "\(lineId ?? "status")-\(created)" }
   public var lineId: String?
@@ -120,18 +107,27 @@ enum LoadingState<Resource: Codable> {
 
 @MainActor
 public class TransitLineViewModel: ObservableObject {
+  typealias Resource = [TransitLine]
+  
   static let API_URL = URL(string: "https://underground.lucid.toys/api/data")!
   
-  @AppStorage("favouriteLineIDs") var favouriteLineIDs: TransitLineIDs = favourites.get() {
+  @AppStorage("favouriteLineIDs") var favouriteLineIDs: TransitLineIDs = [] {
     didSet {
       self.objectWillChange.send()
     }
   }
   
-  @Published var state: LoadingState<[TransitLine]> = .idle
+  @Published var state: LoadingState<Resource> = .idle
   @Published var lastUpdated: Date = Date()
   
-  var lines: [TransitLine] {
+  init() {
+    if let cachedResults = UserDefaults.standard.data(forKey: "cachedResults"),
+       let decodedResults = try? JSONDecoder().decode(Resource.self, from: cachedResults) {
+      state = .loaded(data: decodedResults)
+    }
+  }
+  
+  var lines: Resource {
     if case .loaded(let lines) = state {
       return lines
     } else {
@@ -139,11 +135,11 @@ public class TransitLineViewModel: ObservableObject {
     }
   }
   
-  var favouriteLines: [TransitLine] {
+  var favouriteLines: Resource {
     lines.filter { favouriteLineIDs.contains($0.id.rawValue) }
   }
   
-  var nonFavouriteLines: [TransitLine] {
+  var nonFavouriteLines: Resource {
     lines.filter { !favouriteLineIDs.contains($0.id.rawValue) }
   }
 
@@ -162,22 +158,23 @@ public class TransitLineViewModel: ObservableObject {
     
     do {
       let (data, _) = try await session.data(from: Self.API_URL)
-      
-      let newData = try JSONDecoder().decode([TransitLine].self, from: data)
-      
+      let newData = try JSONDecoder().decode(Resource.self, from: data)
       state = .loaded(data: newData)
+      
+      UserDefaults.standard.set(data, forKey: "cachedResults")
+      
     } catch {
       print(error.localizedDescription)
       self.state = .idle
     }
   }
   
-  func toggleFavourite(lineId: String) {
+  func toggleFavourite(lineId: TfLLineID) {
     withAnimation {
-      if let index = favouriteLineIDs.firstIndex(of: lineId) {
+      if let index = favouriteLineIDs.firstIndex(of: lineId.rawValue) {
         favouriteLineIDs.remove(at: index)
       } else {
-        favouriteLineIDs.append(lineId)
+        favouriteLineIDs.append(lineId.rawValue)
       }
     }
   }

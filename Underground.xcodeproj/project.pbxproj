@@ -10,8 +10,6 @@
 		710544D723AD541A001671E3 /* TransitLineStatusListRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 710544D623AD541A001671E3 /* TransitLineStatusListRow.swift */; };
 		710544D823AD542D001671E3 /* TransitLineStatusListRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 710544D623AD541A001671E3 /* TransitLineStatusListRow.swift */; };
 		710544E523AD6800001671E3 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 710544E423AD6800001671E3 /* CloudKit.framework */; };
-		7110C19E23B299C2000CB1A9 /* DeprecatedSyncModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7110C19D23B299C2000CB1A9 /* DeprecatedSyncModel.swift */; };
-		7110C19F23B29F15000CB1A9 /* DeprecatedSyncModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7110C19D23B299C2000CB1A9 /* DeprecatedSyncModel.swift */; };
 		711AB5E726761202004D0768 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 718A7A4323A8E8A8000CF24E /* ContentView.swift */; };
 		712E161023A94D1000B56242 /* TransitLineDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 712E160F23A94D1000B56242 /* TransitLineDetailView.swift */; };
 		712E161123A94D1000B56242 /* TransitLineDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 712E160F23A94D1000B56242 /* TransitLineDetailView.swift */; };
@@ -21,7 +19,6 @@
 		718A7A4623A8E8A9000CF24E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 718A7A4523A8E8A9000CF24E /* Assets.xcassets */; };
 		718A7A4923A8E8A9000CF24E /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 718A7A4823A8E8A9000CF24E /* Preview Assets.xcassets */; };
 		718A7A7123A8E935000CF24E /* TransitLineViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 718A7A7023A8E935000CF24E /* TransitLineViewModel.swift */; };
-		71A830A223AA364C008A100E /* DeviceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71A830A123AA364C008A100E /* DeviceModel.swift */; };
 		71ADC6D823A90C520073F9AE /* WatchUnderground Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 71ADC6D723A90C520073F9AE /* WatchUnderground Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		71ADC6DF23A90C530073F9AE /* HostingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71ADC6DE23A90C520073F9AE /* HostingController.swift */; };
 		71ADC6E123A90C530073F9AE /* ExtensionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71ADC6E023A90C530073F9AE /* ExtensionDelegate.swift */; };
@@ -83,7 +80,6 @@
 /* Begin PBXFileReference section */
 		710544D623AD541A001671E3 /* TransitLineStatusListRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransitLineStatusListRow.swift; sourceTree = "<group>"; };
 		710544E423AD6800001671E3 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
-		7110C19D23B299C2000CB1A9 /* DeprecatedSyncModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeprecatedSyncModel.swift; sourceTree = "<group>"; };
 		712E160F23A94D1000B56242 /* TransitLineDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransitLineDetailView.swift; sourceTree = "<group>"; };
 		7158321423D648E5002F591D /* UpdatingLiveIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdatingLiveIndicator.swift; sourceTree = "<group>"; };
 		718A7A3C23A8E8A8000CF24E /* Underground.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Underground.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -93,7 +89,6 @@
 		718A7A4823A8E8A9000CF24E /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		718A7A4D23A8E8A9000CF24E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		718A7A7023A8E935000CF24E /* TransitLineViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransitLineViewModel.swift; sourceTree = "<group>"; };
-		71A830A123AA364C008A100E /* DeviceModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceModel.swift; sourceTree = "<group>"; };
 		71ADC6CB23A90C500073F9AE /* WatchUnderground.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WatchUnderground.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		71ADC6D223A90C520073F9AE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		71ADC6D723A90C520073F9AE /* WatchUnderground Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "WatchUnderground Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -107,6 +102,7 @@
 		71ADC6F823A90C990073F9AE /* Underground.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Underground.entitlements; sourceTree = "<group>"; };
 		71ADC6FC23A90E1E0073F9AE /* TransitLineStatusList.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = TransitLineStatusList.swift; sourceTree = "<group>"; tabWidth = 2; };
 		71F5F8F7277CBEB000D9443C /* UndergroundApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UndergroundApp.swift; sourceTree = "<group>"; };
+		71F5F8FA277CCC3500D9443C /* WatchUnderground.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = WatchUnderground.entitlements; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -188,8 +184,6 @@
 			isa = PBXGroup;
 			children = (
 				718A7A7023A8E935000CF24E /* TransitLineViewModel.swift */,
-				71A830A123AA364C008A100E /* DeviceModel.swift */,
-				7110C19D23B299C2000CB1A9 /* DeprecatedSyncModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -197,6 +191,7 @@
 		71ADC6CC23A90C500073F9AE /* WatchUnderground */ = {
 			isa = PBXGroup;
 			children = (
+				71F5F8FA277CCC3500D9443C /* WatchUnderground.entitlements */,
 				71ADC6D223A90C520073F9AE /* Info.plist */,
 			);
 			path = WatchUnderground;
@@ -364,8 +359,6 @@
 				7158321523D648E5002F591D /* UpdatingLiveIndicator.swift in Sources */,
 				718A7A4023A8E8A8000CF24E /* AppDelegate.swift in Sources */,
 				718A7A4423A8E8A8000CF24E /* ContentView.swift in Sources */,
-				7110C19E23B299C2000CB1A9 /* DeprecatedSyncModel.swift in Sources */,
-				71A830A223AA364C008A100E /* DeviceModel.swift in Sources */,
 				71ADC6FD23A90E1E0073F9AE /* TransitLineStatusList.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -381,7 +374,6 @@
 				710544D823AD542D001671E3 /* TransitLineStatusListRow.swift in Sources */,
 				71ADC6E123A90C530073F9AE /* ExtensionDelegate.swift in Sources */,
 				712E161123A94D1000B56242 /* TransitLineDetailView.swift in Sources */,
-				7110C19F23B29F15000CB1A9 /* DeprecatedSyncModel.swift in Sources */,
 				711AB5E726761202004D0768 /* ContentView.swift in Sources */,
 				71ADC6E523A90C530073F9AE /* NotificationView.swift in Sources */,
 				71ADC6FE23A90E4D0073F9AE /* TransitLineStatusList.swift in Sources */,
@@ -585,6 +577,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = WatchUnderground/WatchUnderground.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = YC249PY26F;
@@ -606,6 +599,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = WatchUnderground/WatchUnderground.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = YC249PY26F;
