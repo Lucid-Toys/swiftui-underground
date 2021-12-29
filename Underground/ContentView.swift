@@ -19,9 +19,11 @@ struct ContentView: View {
         .task {
           await viewModel.load()
         }
+        #if !targetEnvironment(macCatalyst)
         .refreshable {
           await viewModel.load()
         }
+        #endif
     }
   }
 }
