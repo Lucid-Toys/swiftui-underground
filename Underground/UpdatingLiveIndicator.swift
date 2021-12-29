@@ -52,6 +52,7 @@ struct UpdatingLiveIndicator: View {
     Label(statusString, systemImage: iconName)
       .font(.caption)
       .foregroundColor(.secondary)
+      .labelStyle(.titleAndIcon)
   }
 }
 

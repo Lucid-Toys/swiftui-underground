@@ -15,10 +15,6 @@ struct TransitLineStatusList: View {
 
   var body: some View {
     List {
-      #if !os(watchOS)
-      UpdatingLiveIndicator(status: linesViewModel.dataState, lastUpdated: linesViewModel.lastUpdated)
-      #endif
-      
       if !linesViewModel.favouriteLines.isEmpty {
         Section(header: Label("Favourited Lines", systemImage: "star")) {
           ForEach(linesViewModel.favouriteLines) { line in
@@ -34,5 +30,12 @@ struct TransitLineStatusList: View {
       }
     }
     .navigationBarTitle("Underground Status")
+    .toolbar {
+      #if !os(watchOS)
+      ToolbarItem(placement: .status) {
+        UpdatingLiveIndicator(status: linesViewModel.dataState, lastUpdated: linesViewModel.lastUpdated)
+      }
+      #endif
+    }
   }
 }

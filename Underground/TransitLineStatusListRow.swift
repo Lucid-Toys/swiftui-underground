@@ -19,13 +19,14 @@ struct TransitLineStatusListRow: View {
 
   var body: some View {
     NavigationLink(destination: TransitLineDetailView(line: line)) {
-      VStack(alignment: .leading, spacing: 4) {
+      HStack {
         Label(
           title: { Text(line.name) },
           icon: { Image(systemName: isFavourite ? "star.square.fill" : "square.fill").foregroundColor(line.color) }
         )
           .font(.headline)
           .lineLimit(1)
+        Spacer()
         StatusSummary(lineStatuses: line.lineStatuses)
       }
     }
@@ -39,22 +40,28 @@ struct StatusSummary: View {
   
   var lineStatuses: [TfLDisruption]
   
-  var body: some View {
-    VStack(alignment: .leading, spacing: 4) {
-      ForEach(lineStatuses) { status in
-        if let severity = getSeverity(for: status) {
-          Label(status.statusSeverityDescription,
-                systemImage: (severity == .high || severity == .medium) ? "exclamationmark.triangle" : "checkmark" )
-            .font(.footnote)
-            .foregroundColor(
-              status.statusSeverity < 6
-                ? Color("Red")
-                : status.statusSeverity < 10
-                ? Color("Yellow")
-                : .secondary
-            )
-        }
+  var mostSevereStatus: TfLDisruption? {
+    lineStatuses.reduce(TfLDisruption?.none) { currentMostSevere, currentDisruption in
+      guard let currentMostSevere = currentMostSevere else {
+        return currentDisruption
       }
+      
+      return currentDisruption.statusSeverity < currentMostSevere.statusSeverity ? currentDisruption : currentMostSevere
+    }
+  }
+  
+  var body: some View {
+    if let status = mostSevereStatus {
+      Label(status.statusSeverityDescription,
+            systemImage: (getSeverity(for: status) == .high || getSeverity(for: status) == .medium) ? "exclamationmark.triangle" : "checkmark" )
+        .foregroundColor(
+          status.statusSeverity < 6
+            ? Color("Red")
+            : status.statusSeverity < 10
+            ? Color("Yellow")
+            : .secondary
+        )
+        .labelStyle(.iconOnly)
     }
   }
   

@@ -194,8 +194,13 @@ public class TransitLineViewModel: ObservableObject {
     }
 
     let url = URL(string: "https://underground.lucid.toys/api/data")!
+    
+    let config = URLSessionConfiguration.default
+    config.requestCachePolicy = .reloadRevalidatingCacheData
+    
+    let session = URLSession(configuration: config)
 
-    URLSession.shared.dataTask(with: url) {(data, _, error) in
+    session.dataTask(with: url) {(data, _, error) in
       do {
         DispatchQueue.main.sync {
           // If 6 seconds or more have passed since the last successful update, let the user know

@@ -53,6 +53,7 @@ struct TransitLineDetailView: View {
         Label(isFavourite ? "Unfavourite" : "Favourite", systemImage: isFavourite ? "star.fill" : "star")
       }
     }
+    .accentColor(line.color)
     .navigationTitle(line.name)
   }
 }
@@ -83,8 +84,7 @@ struct PoorServiceView: View {
       if let reason = status.reason {
         Text(reason)
           .padding(.top, 4)
-          .lineLimit(100)
-          .font(.footnote)
+          .lineLimit(nil)
       }
     }
     .padding(.vertical, 8)
