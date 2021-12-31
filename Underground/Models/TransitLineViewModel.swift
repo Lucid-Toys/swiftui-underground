@@ -148,8 +148,13 @@ public class TransitLineViewModel: ObservableObject {
     }
   }
   
+  @AppStorage("lastUpdated") var storeLastUpdated: TimeInterval = Date().timeIntervalSince1970
+  
   @Published var state: LoadingState<Resource> = .idle
-  @Published var lastUpdated: Date = Date()
+  
+  var lastUpdated: Date {
+    Date(timeIntervalSince1970: storeLastUpdated)
+  }
   
   init() {
     if let cachedResults = UserDefaults.standard.data(forKey: "cachedResults"),
@@ -193,6 +198,7 @@ public class TransitLineViewModel: ObservableObject {
       state = .loaded(data: newData)
       
       UserDefaults.standard.set(data, forKey: "cachedResults")
+      storeLastUpdated = Date().timeIntervalSince1970
       
     } catch {
       print(error.localizedDescription)

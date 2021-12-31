@@ -10,9 +10,21 @@ import SwiftUI
 
 struct TransitLineStatusList: View {
   @EnvironmentObject var linesViewModel: TransitLineViewModel
-
+  
   var body: some View {
     List {
+      if linesViewModel.lastUpdated.timeIntervalSinceNow > (60 * 60) {
+        VStack(alignment: .leading) {
+          Text("\(Image(systemName: "wifi.slash")) This data may be out of date")
+            .fontWeight(.bold)
+          Text("Last updated: \(linesViewModel.lastUpdated, style: .relative)")
+            .foregroundStyle(.secondary)
+        }
+        .foregroundStyle(.black)
+        .listRowBackground(Color.yellow)
+        .font(.footnote)
+      }
+      
       if !linesViewModel.favouriteLines.isEmpty {
         Section(header: Label("Favourited Lines", systemImage: "star")) {
           ForEach(linesViewModel.favouriteLines) { line in
@@ -38,6 +50,7 @@ struct TransitLineStatusList: View {
         }
       }
     }
+    .transition(.slide)
     .navigationBarTitle("Underground Status")
     #if targetEnvironment(macCatalyst)
     .toolbar {
@@ -47,4 +60,5 @@ struct TransitLineStatusList: View {
     }
     #endif
   }
+  
 }
