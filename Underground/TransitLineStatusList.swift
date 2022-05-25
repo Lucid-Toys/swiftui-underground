@@ -8,8 +8,20 @@
 
 import SwiftUI
 
+struct TransitListSection: Hashable {
+  var title: String
+  var lines: [TransitLine]
+}
+
 struct TransitLineStatusList: View {
   @EnvironmentObject var linesViewModel: TransitLineViewModel
+  
+  var sections: [TransitListSection] {
+    [
+      TransitListSection(title: "Favourite Lines", lines: linesViewModel.favouriteLines),
+      TransitListSection(title: "TfL Lines", lines: linesViewModel.nonFavouriteLines)
+    ]
+  }
   
   var body: some View {
     List {
@@ -25,28 +37,23 @@ struct TransitLineStatusList: View {
         .font(.footnote)
       }
       
-      if !linesViewModel.favouriteLines.isEmpty {
-        Section(header: Label("Favourited Lines", systemImage: "star")) {
-          ForEach(linesViewModel.favouriteLines) { line in
-            TransitLineStatusListRow(line: line)
-              .swipeActions(edge: .leading, allowsFullSwipe: true) {
-                Button(action: { linesViewModel.toggleFavourite(lineId: line.id) }) {
-                  Label("Unfavourite", systemImage: "star.slash")
+      ForEach(sections, id: \.title) { section in
+        if !section.lines.isEmpty {
+          Section(section.title) {
+            ForEach(section.lines) { line in
+              TransitLineStatusListRow(line: line)
+                .swipeActions(edge: .leading, allowsFullSwipe: true) {
+                  Button(action: { linesViewModel.toggleFavourite(lineId: line.id) }) {
+                    Label(
+                      linesViewModel.isFavourite(lineId: line.id) ? "Unfavourite" : "Favourite",
+                      systemImage: "star")
+                  }
+                  .symbolVariant(linesViewModel.isFavourite(lineId: line.id) ? .slash : .fill)
+                  .tint(linesViewModel.isFavourite(lineId: line.id) ? .none : .yellow)
                 }
-              }
-          }
-        }
-      }
-      
-      Section(header: Label("TfL Lines", systemImage: "tram")) {
-        ForEach(linesViewModel.nonFavouriteLines) { line in
-          TransitLineStatusListRow(line: line)
-            .swipeActions(edge: .leading, allowsFullSwipe: true) {
-              Button(action: { linesViewModel.toggleFavourite(lineId: line.id) }) {
-                Label("Favourite", systemImage: "star")
-              }
-              .tint(.yellow)
+                .id(line.id)
             }
+          }
         }
       }
     }

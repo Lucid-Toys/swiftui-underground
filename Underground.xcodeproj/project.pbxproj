@@ -13,6 +13,8 @@
 		711AB5E726761202004D0768 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 718A7A4323A8E8A8000CF24E /* ContentView.swift */; };
 		712E161023A94D1000B56242 /* TransitLineDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 712E160F23A94D1000B56242 /* TransitLineDetailView.swift */; };
 		712E161123A94D1000B56242 /* TransitLineDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 712E160F23A94D1000B56242 /* TransitLineDetailView.swift */; };
+		71808A93277F6DF700E9BFDF /* URLWatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71808A92277F6DF700E9BFDF /* URLWatcher.swift */; };
+		71808A94277F6DFB00E9BFDF /* URLWatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71808A92277F6DF700E9BFDF /* URLWatcher.swift */; };
 		718A7A4023A8E8A8000CF24E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 718A7A3F23A8E8A8000CF24E /* AppDelegate.swift */; };
 		718A7A4423A8E8A8000CF24E /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 718A7A4323A8E8A8000CF24E /* ContentView.swift */; };
 		718A7A4623A8E8A9000CF24E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 718A7A4523A8E8A9000CF24E /* Assets.xcassets */; };
@@ -80,6 +82,7 @@
 		710544D623AD541A001671E3 /* TransitLineStatusListRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransitLineStatusListRow.swift; sourceTree = "<group>"; };
 		710544E423AD6800001671E3 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
 		712E160F23A94D1000B56242 /* TransitLineDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransitLineDetailView.swift; sourceTree = "<group>"; };
+		71808A92277F6DF700E9BFDF /* URLWatcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLWatcher.swift; sourceTree = "<group>"; };
 		718A7A3C23A8E8A8000CF24E /* Underground.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Underground.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		718A7A3F23A8E8A8000CF24E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		718A7A4323A8E8A8000CF24E /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -165,6 +168,7 @@
 				718A7A4523A8E8A9000CF24E /* Assets.xcassets */,
 				718A7A6F23A8E922000CF24E /* Models */,
 				718A7A4723A8E8A9000CF24E /* Preview Content */,
+				71808A92277F6DF700E9BFDF /* URLWatcher.swift */,
 			);
 			path = Underground;
 			sourceTree = "<group>";
@@ -353,6 +357,7 @@
 				71F5F8F8277CBEB000D9443C /* UndergroundApp.swift in Sources */,
 				718A7A7123A8E935000CF24E /* TransitLineViewModel.swift in Sources */,
 				712E161023A94D1000B56242 /* TransitLineDetailView.swift in Sources */,
+				71808A93277F6DF700E9BFDF /* URLWatcher.swift in Sources */,
 				718A7A4023A8E8A8000CF24E /* AppDelegate.swift in Sources */,
 				718A7A4423A8E8A8000CF24E /* ContentView.swift in Sources */,
 				71ADC6FD23A90E1E0073F9AE /* TransitLineStatusList.swift in Sources */,
@@ -371,6 +376,7 @@
 				71ADC6E123A90C530073F9AE /* ExtensionDelegate.swift in Sources */,
 				712E161123A94D1000B56242 /* TransitLineDetailView.swift in Sources */,
 				711AB5E726761202004D0768 /* ContentView.swift in Sources */,
+				71808A94277F6DFB00E9BFDF /* URLWatcher.swift in Sources */,
 				71ADC6E523A90C530073F9AE /* NotificationView.swift in Sources */,
 				71ADC6FE23A90E4D0073F9AE /* TransitLineStatusList.swift in Sources */,
 			);

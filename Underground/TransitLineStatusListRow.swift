@@ -46,8 +46,11 @@ struct TransitLineStatusListRow: View {
     .foregroundStyle(.white)
     .listRowBackground(
       line.color
-      #if os(watchOS)
+      #if !os(iOS)
         .cornerRadius(12)
+      #endif
+      #if os(macOS)
+        .padding(.vertical, 4)
       #endif
     )
   }

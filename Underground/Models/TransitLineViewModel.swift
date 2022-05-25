@@ -10,8 +10,8 @@ import Foundation
 import Network
 import SwiftUI
 
-struct TfLDisruption: Codable, Identifiable, Equatable {
-  public var id: String { "\(lineId ?? "status")-\(created)" }
+struct TfLDisruption: Codable, Identifiable, Hashable {
+  public var id: Int
   public var lineId: String?
   public var statusSeverity: Int
   public var statusSeverityDescription: String
@@ -34,6 +34,7 @@ enum TfLLineID: String, Codable {
   case tfLRail = "tfl-rail"
   case victoria = "victoria"
   case waterlooCity = "waterloo-city"
+  case elizabethLine = "elizabeth"
 }
 
 struct TfLLineColor {
@@ -51,7 +52,8 @@ struct TfLLineColor {
     .piccadilly: Color(red: 0.10, green: 0.2, blue: 0.8),
     .tfLRail: Color(red: 0.00, green: 0.10, blue: 0.66),
     .victoria: Color(red: 0.02, green: 0.63, blue: 0.89),
-    .waterlooCity: Color(red: 0.47, green: 0.82, blue: 0.74)
+    .waterlooCity: Color(red: 0.47, green: 0.82, blue: 0.74),
+    .elizabethLine: Color(red: 0.41, green: 0.31, blue: 0.63)
   ]
   
   static subscript (key: TfLLineID) -> Color {
@@ -65,13 +67,9 @@ struct TfLLineColor {
   }
 }
 
-struct TransitLine: Codable, Identifiable, Equatable {
+struct TransitLine: Codable, Identifiable, Hashable {
   enum DisruptionSeverity {
     case high, medium, low
-  }
-  
-  static func == (lhs: TransitLine, rhs: TransitLine) -> Bool {
-    lhs.id == rhs.id && lhs.lineStatuses.elementsEqual(rhs.lineStatuses)
   }
   
   var id: TfLLineID
@@ -141,6 +139,7 @@ public class TransitLineViewModel: ObservableObject {
   typealias Resource = [TransitLine]
   
   static let API_URL = URL(string: "https://underground.lucid.toys/api/data")!
+  private let urlWatcher = URLWatcher(url: TransitLineViewModel.API_URL, delay: 5)
   
   @AppStorage("favouriteLineIDs") var favouriteLineIDs: TransitLineIDs = [] {
     didSet {
@@ -187,22 +186,19 @@ public class TransitLineViewModel: ObservableObject {
       self.state = .loading
     }
     
-    let config = URLSessionConfiguration.default
-    config.requestCachePolicy = .reloadRevalidatingCacheData
-    
-    let session = URLSession(configuration: config)
-    
     do {
-      let (data, _) = try await session.data(from: Self.API_URL)
-      let newData = try JSONDecoder().decode(Resource.self, from: data)
-      state = .loaded(data: newData)
-      
-      UserDefaults.standard.set(data, forKey: "cachedResults")
-      storeLastUpdated = Date().timeIntervalSince1970
-      
+      for try await data in urlWatcher {
+        let newData = try JSONDecoder().decode(Resource.self, from: data)
+        
+        withAnimation {
+          state = .loaded(data: newData)
+        }
+        
+        UserDefaults.standard.set(data, forKey: "cachedResults")
+        storeLastUpdated = Date().timeIntervalSince1970
+      }
     } catch {
       print(error.localizedDescription)
-      self.state = .idle
     }
   }
   

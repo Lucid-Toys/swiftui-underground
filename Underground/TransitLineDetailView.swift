@@ -10,14 +10,6 @@
 
 import SwiftUI
 
-func shouldShowPoorServiceView(_ lineStatuses: [TfLDisruption]) -> Bool {
-  if lineStatuses.count > 1 || (lineStatuses.count >= 1 && lineStatuses[0].statusSeverity != 10) {
-    return true
-  } else {
-    return false
-  }
-}
-
 struct TransitLineDetailView: View {
   @EnvironmentObject var lineViewModel: TransitLineViewModel
   
@@ -55,6 +47,9 @@ struct TransitLineDetailView: View {
     }
     .symbolRenderingMode(.multicolor)
     .navigationTitle(line.name)
+    .task {
+      await lineViewModel.load()
+    }
   }
 }
 
